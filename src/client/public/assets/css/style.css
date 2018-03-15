@@ -1,0 +1,125 @@
+body {
+  margin: 0;
+}
+
+@font-face {
+  font-family: Alice;
+  src: url('../fonts/Alice/Alice-Regular.ttf');
+}
+@font-face {
+  font-family: Katibeh;
+  src: url('../fonts/Alice/Katibeh-Regular.ttf');
+}
+
+.section-1, .section-2, .section-3, .section-4 {
+  height: 100%;
+}
+
+.section-1 {
+  background-image: url('../images/bg/1.jpg');
+  background-size: cover;
+  font-family: Alice;
+  position: relative;
+}
+
+.section-1__img {
+  position: absolute;
+}
+
+#tea {
+  width: 350px;
+  bottom: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.section-2 {
+  background-image: url('../images/bg/2.jpg');
+  background-size: cover;
+  font-family: Alice;
+  position: relative;
+}
+
+.section-2__img {
+  position: absolute;
+}
+
+#risoles {
+  width: 400px;
+  left: 33%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#bitterballen {
+  width: 400px;
+  left: 39%;
+  top: 50%;
+  transform: translate(50%, -50%);
+}
+
+.section-3 {
+  background-image: url('../images/bg/3.jpg');
+  background-size: cover;
+  font-family: Alice;
+  position: relative;
+}
+
+.section-3__img {
+  position: absolute;
+}
+
+#kerrie {
+  width: 400px;
+  left: 4%;
+  top: 43%;
+  transform: translateY(-50%);
+}
+
+#biefstuk {
+  width: 400px;
+  left: 35%;
+  top: 43%;
+  transform: translateY(-50%);
+}
+
+#acarIkan {
+  width: 400px;
+  left: 66%;
+  top: 43%;
+  transform: translateY(-50%);
+}
+
+.section-4 {
+  background-image: url('../images/bg/4.jpg');
+  background-size: cover;
+  font-family: Alice;
+  position: relative;
+}
+
+.section-4__img {
+  position: absolute;
+}
+
+#poffertjes {
+  width: 400px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.section-5 {
+  background-image: url('../images/bg/5.jpg');
+  background-size: cover;
+  font-family: Alice;
+}
+
+.section-5__img {
+  position: relative;
+}
+
+#package1, #package2 {
+  display: block;
+  margin: auto;
+}
