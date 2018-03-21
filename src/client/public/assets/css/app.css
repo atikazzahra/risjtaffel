@@ -1,0 +1,117 @@
+body { margin: 0 }
+
+.sectionPart4 {
+    font-family: Alice;
+    position: relative;
+    width: 100%;
+}
+.sectionPart4__bg {
+    height: 100%;
+    background-size: cover;
+}
+.sectionPart4__content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+.sectionPart4__content-img {
+    position: absolute;
+}
+
+.sectionScroller {
+    position: relative;
+}
+.sectionScrollerPlaceholder {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    top: 0;
+}
+.sectionScroller__bg {
+    width: 100%;
+    height: 100vh;
+}
+
+/* section part 4 content */
+/* opening */
+#tea {
+    width: 350px;
+    bottom: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+/* appetizers */
+#risoles {
+    width: 400px;
+    left: 33%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+#bitterballen {
+    width: 400px;
+    left: 39%;
+    top: 50%;
+    transform: translate(50%, -50%);
+}
+/* mains */
+#kerrie {
+    width: 400px;
+    left: 4%;
+    top: 50%;
+    transform: translateY(-50%);
+} 
+#biefstuk {
+    width: 400px;
+    left: 35%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#acarIkan {
+    width: 400px;
+    left: 66%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+/* desserts */
+#poffertjes {
+    width: 400px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+/* packages */
+#package1, #package2 {
+    display: block;
+    margin: auto;
+    position: relative!important;
+}
+
+/* section part 4 background */
+#opening_bg {
+    background-image: url('../images/bg/1.jpg');
+}
+#appetizers_bg {
+    background-image: url('../images/bg/2.jpg');
+}
+#mains_bg {
+    background-image: url('../images/bg/3.jpg');
+}
+#desserts_bg {
+    background-image: url('../images/bg/4.jpg');
+}
+#packages1_bg, #packages2_bg {
+    background-image: url('../images/bg/5.jpg');
+}
+
+/* utilities */
+.hide {
+    display: none!important;
+}
+.fixed {
+    position: fixed!important;
+}
+.slide {
+    position: absolute;
+}

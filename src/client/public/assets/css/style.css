@@ -11,7 +11,7 @@ body {
   src: url('../fonts/Alice/Katibeh-Regular.ttf');
 }
 
-.section-1, .section-2, .section-3, .section-4 {
+.section-1, .section-2, .section-3, .section-4, .placeholder {
   height: 100%;
 }
 
@@ -38,7 +38,6 @@ body {
   background-image: url('../images/bg/2.jpg');
   background-size: cover;
   font-family: Alice;
-  position: relative;
 }
 
 .section-2__img {
@@ -63,7 +62,7 @@ body {
   background-image: url('../images/bg/3.jpg');
   background-size: cover;
   font-family: Alice;
-  position: relative;
+  position: absolute;
 }
 
 .section-3__img {
@@ -95,7 +94,8 @@ body {
   background-image: url('../images/bg/4.jpg');
   background-size: cover;
   font-family: Alice;
-  position: relative;
+  position: absolute;
+  z-index: 5;
 }
 
 .section-4__img {
@@ -113,6 +113,8 @@ body {
   background-image: url('../images/bg/5.jpg');
   background-size: cover;
   font-family: Alice;
+  position: absolute;
+  width: 100%;
 }
 
 .section-5__img {
@@ -122,4 +124,41 @@ body {
 #package1, #package2 {
   display: block;
   margin: auto;
+}
+
+.section__part4 {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+}
+
+.slide {
+  position: absolute;
+  display: block;
+  width: 100%;
+  z-index: 5;
+}
+
+.hide {
+  display: none;
+}
+
+.fixed {
+position: fixed;
+}
+
+.pin-cont {
+  position: relative;
+  height: 1800px;
+}
+.pin-cont-2 {
+  position: relative;
+  height: 2000px;
+}
+
+.section__content {
+  position: absolute;
+  width: 100%;
+  top: 50%;
 }
