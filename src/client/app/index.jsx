@@ -113,7 +113,7 @@ class App extends Component {
                                     ])}
                                 ></NavPart4>
                                 <NavPart4
-                                    position="1679"
+                                    position="1479"
                                     active={scrollY < 2080/2}
                                     styleNav=
                                     {tween(scrollY, [
@@ -134,7 +134,7 @@ class App extends Component {
                                     ])}
                                 ></NavPart4>
                                 <NavPart4
-                                    position="2080"
+                                    position="1679"
                                     active={scrollY < 659/2}
                                     styleNav=
                                     {tween(scrollY, [
@@ -163,6 +163,7 @@ class App extends Component {
                             formulas={[topTop, bottomBottom]}>
                         {(posTopTop, posBottomBottom) =>
                             <div className={cx("sectionScrollerPlaceholder", {fixed: scrollY > posTopTop})}>
+                                <div style={{position: "fixed", zIndex: "20", fontSize: "50"}}>{scrollY} === {posTopTop}</div>
                                 <SectionPart4
                                     sectionScroller="True"
                                     id="appetizers">
@@ -174,6 +175,12 @@ class App extends Component {
                                             [[posTopTop+180], { marginTop: px(200), opacity: 0 }]
                                         ])}
                                         src="assets/images/food/Rissoles-Salad-with-Mustard-Sauce.png" className="sectionPart4__content-img" id="risoles"/>
+                                    <div className="food-desc" id="rissoles_desc">
+                                        <div className="food-desc__title">Rissoles Salad</div>
+                                        <div className="food-desc__subtitle">with Mustard Sauce</div>
+                                        <div className="food-desc__fulldesc">
+                                            Dutch-style rissoles stuffed with prawns, served on the top of huzaren sla salad with pineapple, apple, cucumber, onion, carrot, potato, and mayonaise-based sauce.</div>
+                                    </div>
                                     <img
                                         style={tween(scrollY, [
                                             [[posTopTop-230], { marginTop: px(-200), opacity: 0, ease: easeOutElastic}],
@@ -189,7 +196,7 @@ class App extends Component {
                                     sectionTween="True"
                                     id="mains"
                                     slide="True"
-                                    hide={scrollY < posTopTop+20}
+                                    hide={scrollY <= posTopTop+20}
                                     styleBg={tween(scrollY, [
                                         [[posTopTop+20], {bottom: percent(100)}],
                                         [[posTopTop+420], {bottom: percent(0)}]
@@ -225,16 +232,18 @@ class App extends Component {
                                     sectionTween="True"
                                     id="desserts"
                                     slide="True"
-                                    hide={scrollY < posTopTop+420}
+                                    hide={scrollY <= posTopTop+420}
                                     styleBg={tween(scrollY, [
                                         [[posTopTop+420], {bottom: percent(100)}],
-                                        [[posTopTop+1020], {bottom: percent(0)}]
+                                        [[posTopTop+820], {bottom: percent(0)}]
                                     ])}>
                                     <div id="desserts_title">Dessert</div>
                                     <img 
                                         style={tween(scrollY, [
                                         [[posTopTop+420], { marginTop: px(-500), opacity: 0, ease: easeOutElastic}],
-                                        [[posTopTop+720], { marginTop: px(0), opacity: 1 }]
+                                        [[posTopTop+602], { marginTop: px(0), opacity: 1 }],
+                                        [[posTopTop+602], { marginTop: px(0), opacity: 1, ease: easeInElastic }],
+                                        [[posTopTop+1021], { marginTop: px(200), opacity: 0}],
                                         ])}
                                         src="assets/images/food/Poffertjes.png" className="sectionPart4__content-img" id="poffertjes"/>
                                 </SectionPart4>
@@ -243,19 +252,27 @@ class App extends Component {
                                     sectionTween="True"
                                     id="packages1"
                                     slide="True"
-                                    hide={scrollY < posTopTop+1020}
+                                    hide={scrollY <= posTopTop+820}
                                     styleBg={tween(scrollY, [
-                                        [[posTopTop+1020], {bottom: percent(100)}],
-                                        [[posTopTop+1420], {bottom: percent(0)}]
+                                        [[posTopTop+820], {bottom: percent(100)}],
+                                        [[posTopTop+1020], {bottom: percent(0)}]
                                     ])}>
-                                    <div id="packages1__title">Rijsttafel Package</div>
-                                    <div id="packages1__subtitle">available for 2 persons and 5 persons</div>
+                                    <div id="packages_title"
+                                        style={tween(scrollY, [
+                                            [[posTopTop+820], { left: -500, opacity: 0, ease: easeOutElastic }],
+                                            [[posTopTop+1020], { left: 0, opacity: 1 }],
+                                            [[posTopTop+1020], { top: 0, opacity: 1 }],
+                                            [[posTopTop+1420], { top: -500, opacity: 1 }]
+                                            ])}>
+                                        <div id="packages1__title">Rijsttafel Package</div>
+                                        <div id="packages1__subtitle">available for 2 persons and 5 persons</div>
+                                    </div>
                                     <img 
                                         style={tween(scrollY, [
-                                        [[posTopTop+1020], { marginTop: px(-500), opacity: 0, ease: easeOutElastic }],
-                                        [[posTopTop+1220], { marginTop: px(0), opacity: 1 }],
-                                        [[posTopTop+1420], { marginTop: px(0), opacity: 1 }],
-                                        [[posTopTop+1820], { marginTop: px(-500), opacity: 1 }],
+                                        [[posTopTop+820], { top: -500, opacity: 0, ease: easeOutElastic }],
+                                        [[posTopTop+1020], { top: 0, opacity: 1 }],
+                                        [[posTopTop+1020], { top: 0, opacity: 1 }],
+                                        [[posTopTop+1420], { top: -500, opacity: 1 }]
                                         ])}
                                         src="assets/images/food/Rijsttafel-Package-1.png" className="sectionPart4__content-img" id="package1"/>
                                 </SectionPart4>
@@ -264,11 +281,11 @@ class App extends Component {
                                     sectionTween="True"
                                     id="packages2"
                                     slide="True"
-                                    hide={scrollY < posTopTop+1420}>
+                                    hide={scrollY < posTopTop+1020}>
                                     <img 
                                         style={tween(scrollY, [
-                                        [[posTopTop+1420], { bottom: -500, opacity: 0 }],
-                                        [[posTopTop+1820], { bottom: 0, opacity: 1 }]
+                                        [[posTopTop+1020], { bottom: -500, opacity: 0 }],
+                                        [[posTopTop+1420], { bottom: 0, opacity: 1 }]
                                         ])}
                                         src="assets/images/food/Rijsttafel-Package-2.png" className="sectionPart4__content-img" id="package2"/>
                                 </SectionPart4>

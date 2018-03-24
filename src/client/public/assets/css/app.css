@@ -99,6 +99,7 @@ body { margin: 0 }
     top: 20;
 }
 /*packages*/
+#packages_title {position: relative;}
 #packages1__title {
     margin-top: 50px;
     color: #e1b27e;
@@ -219,6 +220,42 @@ body { margin: 0 }
 #packages1_bg, #packages2_bg {
     background-image: url('../images/bg/5.jpg');
     z-index: 11;
+}
+
+/*food description*/
+.food-desc {
+    position: absolute;
+}
+.food-desc__title {
+    font-family: Katibeh;
+    font-size: 38px;
+    letter-spacing: 3px;
+    margin-bottom: -15px;
+}
+.food-desc__subtitle {
+    font-family: Katibeh;
+    font-size: 23px;
+    letter-spacing: 3px;
+}
+.food-desc__fulldesc {
+    font-family: Alice;
+    font-size: 12px;
+}
+/*appetizers*/
+#rissoles_desc {
+    position: absolute;
+    width: 20%;
+    top: 420;
+    left: 20;
+}
+#rissoles_desc > .food-desc__title, 
+#rissoles_desc > .food-desc__subtitle {
+    color: #ebde6e;
+    text-align: right;
+}
+#rissoles_desc > .food-desc__fulldesc {
+    color: #fef1c7;
+    text-align: right;
 }
 
 /* utilities */
