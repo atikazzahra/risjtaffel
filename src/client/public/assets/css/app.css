@@ -131,6 +131,41 @@ body { margin: 0 }
     position: absolute;
     z-index: 11;
 }
+/*gif*/
+.sectionPart4__content-gif {
+    position: absolute;
+    z-index: 11;
+    width: 130px;
+    -webkit-box-shadow: 15px 19px 36px -16px rgba(0,0,0,0.75);
+    -moz-box-shadow: 15px 19px 36px -16px rgba(0,0,0,0.75);
+    box-shadow: 15px 19px 36px -16px rgba(0,0,0,0.75);
+}
+.sectionPart4__gif-overflow {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+/*opening*/
+#gif1 {
+    bottom: 100;
+    transform: rotate(14deg);
+}
+#gif2 {
+    bottom: -20;
+    left: 300;
+    transform: rotate(-20deg);
+}
+#gif3 {
+    right: 300;
+    bottom: 50;
+    transform: rotate(10deg);
+}
+#gif4 {
+    right: -40;
+    transform: rotate(-20deg);
+    bottom: 100;
+}
 
 .sectionScroller {
     position: relative;
@@ -156,7 +191,7 @@ body { margin: 0 }
     z-index: 1;
 }
 /* appetizers */
-#risoles {
+#rissoles {
     width: 400px;
     left: 33%;
     top: 50%;
@@ -164,7 +199,7 @@ body { margin: 0 }
 }
 #bitterballen {
     width: 400px;
-    left: 39%;
+    left: 36%;
     top: 50%;
     transform: translate(50%, -50%);
 }
@@ -172,19 +207,19 @@ body { margin: 0 }
 #kerrie {
     width: 400px;
     left: 4%;
-    top: 50%;
+    top: 47%;
     transform: translateY(-50%);
 } 
 #biefstuk {
     width: 400px;
     left: 35%;
-    top: 50%;
+    top: 47%;
     transform: translateY(-50%);
 }
 #acarIkan {
     width: 400px;
     left: 66%;
-    top: 50%;
+    top: 47%;
     transform: translateY(-50%);
 }
 /* desserts */
@@ -236,26 +271,97 @@ body { margin: 0 }
     font-family: Katibeh;
     font-size: 23px;
     letter-spacing: 3px;
+    margin-bottom: -10px;
 }
 .food-desc__fulldesc {
     font-family: Alice;
     font-size: 12px;
+    margin-top: 10px;
 }
 /*appetizers*/
-#rissoles_desc {
-    position: absolute;
+#appetizers .food-desc__title, 
+#appetizers .food-desc__subtitle,
+#desserts .food-desc__title,
+#desserts .food-desc__subtitle {
+    color: #ebde6e;
+}
+#appetizers .food-desc__fulldesc,
+#desserts .food-desc__fulldesc {
+    color: #fef1c7;
+}
+#appetizers .food-desc, 
+#desserts .food-desc {
     width: 20%;
+}
+#rissoles_desc {
     top: 420;
     left: 20;
 }
 #rissoles_desc > .food-desc__title, 
-#rissoles_desc > .food-desc__subtitle {
-    color: #ebde6e;
+#rissoles_desc > .food-desc__subtitle,
+#rissoles_desc > .food-desc__fulldesc {
     text-align: right;
 }
-#rissoles_desc > .food-desc__fulldesc {
-    color: #fef1c7;
-    text-align: right;
+#bitterballen_desc {
+    top: 180;
+    right: 69;
+}
+#poffertjes_desc {
+    bottom: 50;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+/*mains*/
+#mains .food-desc__title, 
+#mains .food-desc__subtitle {
+    color: #551d0c;
+}
+#mains .food-desc__fulldesc {
+    color: #8d3505;
+}
+#mains .food-desc {
+    width: 25%;
+    text-align: center;
+}
+#kerrie_desc {
+    bottom: 50;
+    left: 6%;
+}
+#biefstuk_desc {
+    width: 30%!important;
+    bottom: 50;
+    left: 35%;
+}
+#acarIkan_desc {
+    left: 69%;
+    bottom: 78px;
+}
+
+/*packages*/
+#packages1__fulldesc {
+    text-align: center;
+    font-family: Alice;
+    font-size: 20px;
+    color: #eec44c;
+    width: 50%;
+    margin: auto;
+    position: relative;
+    line-height: 33px;
+}
+#packages2_content {
+    position: relative!important;
+}
+#packages2__fulldesc {
+    top: 0;
+    font-family: Katibeh;
+    font-size: 29px;
+    color: #eec44c;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 11;
 }
 
 /* utilities */
@@ -267,4 +373,13 @@ body { margin: 0 }
 }
 .slide {
     position: absolute;
+}
+
+#packages1__fulldesc > .fa-circle {
+    font-size: 7px;
+    vertical-align: middle;
+    padding-bottom: 3px;
+    color: #c2531c;
+    margin-left: 5px;
+    margin-right: 5px;
 }

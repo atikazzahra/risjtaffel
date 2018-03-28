@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import ReactDOM, { findDOMNode } from 'react-dom';
-import { FullPage, Slide } from 'react-full-page';
+import ReactDOM, {findDOMNode} from 'react-dom';
 import {Easer} from 'functional-easing';
-import scrollToComponent from 'react-scroll-to-component';
-import Scroll, {Element} from 'react-scroll';
 import cx from 'classnames';
 import {Track, TrackedDiv, TrackDocument} from 'react-track';
 import {tween, ease} from 'react-imation';
@@ -18,8 +15,52 @@ import {topTop,
         calculateScrollY} from 'react-track/tracking-formulas';
 import {rgb, rgba, scale, rotate,
         px, percent, translate3d} from 'react-imation/tween-value-factories';
+import {tweenState} from 'react-tween-state';
+import {SectionPart4, NavPart4, FoodDescPart4} from './components/index.jsx';
+import Animate from 'react-move/Animate';
 
 class App extends Component {
+    constructor(props){
+        super(props);
+        this.foodDesc = [];
+        this.state = {
+            scrollDiff: 400,
+            sectionWidth: 0,
+            sectionHeight: 0,
+            navTweenPostion: [],
+            navScrollPosition: []
+        };
+        this.updateDimensions = this.updateDimensions.bind(this);
+        this.updateNavData = this.updateNavData.bind(this);
+        this.getSectionRect = this.getSectionRect.bind(this)
+    }
+    componentDidMount() {
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions);
+    }
+
+    showDescription(props) {
+        this.foodDesc[String(props.target.id)].updateShow();
+    }
+    getSectionRect(){
+        return document.getElementById("opening").getBoundingClientRect();
+    }
+    updateNavData(){
+        var navScroll = [];
+        navScroll.push(0);
+        for (var i = 0; i < 4; i++) { 
+            let pos = this.getSectionRect().height + (i*this.state.scrollDiff);
+            navScroll.push(pos);
+        }
+        console.log(navScroll);
+        return navScroll;
+    }
+    updateDimensions() {
+        this.setState({
+            sectionWidth: this.getSectionRect().width, 
+            sectionHeight: this.getSectionRect().height,
+            navScrollPosition: this.updateNavData()});
+    }
     render() {
         const navTweenPostion = [0, 359, 390, 846, 847, 1327, 1346, 1844, 1860];
         const easeOutElastic = new Easer().using('out-elastic').withParameters(0.7, 2);
@@ -38,7 +79,15 @@ class App extends Component {
                         that still have rijsttafel’s dishes and servings.
                         </div>
                     </div>
+                    <img src="assets/images/photos/todaysrijsttafel_gif1.gif" className="sectionPart4__content-gif" id="gif1"/>
+                    <img src="assets/images/photos/todaysrijsttafel_gif2.gif" className="sectionPart4__content-gif" id="gif2"/>
+                    <img src="assets/images/photos/todaysrijsttafel_gif3.gif" className="sectionPart4__content-gif" id="gif3"/>
+                    
+                    <div className="sectionPart4__gif-overflow">
+                        <img src="assets/images/photos/todaysrijsttafel_gif4.gif" className="sectionPart4__content-gif" id="gif4"/>
+                    </div>
                     <img src="assets/images/food/Kunstkring_Tea.png" className="sectionPart4__content-img" id="tea"/>
+
                 </SectionPart4>
                 <TrackDocument formulas={[getDocumentElement, getDocumentRect, calculateScrollY,
                     topTop, topBottom, topCenter, centerCenter, bottomBottom,
@@ -51,8 +100,8 @@ class App extends Component {
                         {(posTopTop, posBottomBottom) =>
                             <ul className="navPart4">
                                 <NavPart4
-                                    position="0"
-                                    active={scrollY < 659/2}
+                                    position={this.state.navScrollPosition? this.state.navScrollPosition[0] : '0'}
+                                    active={this.state.navScrollPosition? scrollY < this.state.navScrollPosition[1]/2 : '659/2'}
                                     styleNav=
                                     {tween(scrollY, [
                                         [ navTweenPostion[0], { backgroundColor: rgb(221,145,95), height: px(15), width: px(15) } ],
@@ -71,8 +120,8 @@ class App extends Component {
                                     ])}
                                 ></NavPart4>
                                 <NavPart4
-                                    position="659"
-                                    active={scrollY < 1079/2}
+                                    position={this.state.navScrollPosition? this.state.navScrollPosition[1] : '659'}
+                                    active={this.state.navScrollPosition? scrollY < this.state.navScrollPosition[2]/2 : '1079/2'}
                                     styleNav=
                                     {tween(scrollY, [
                                         [ navTweenPostion[0], { backgroundColor: rgb(194,83,28), height: px(8), width: px(8) } ],
@@ -92,8 +141,8 @@ class App extends Component {
                                     ])}
                                 ></NavPart4>
                                 <NavPart4
-                                    position="1079"
-                                    active={scrollY < 1679/2}
+                                    position={this.state.navScrollPosition? this.state.navScrollPosition[2] : '1079'}
+                                    active={this.state.navScrollPosition? scrollY < this.state.navScrollPosition[3]/2 : '1479/2'}
                                     styleNav=
                                     {tween(scrollY, [
                                         [ navTweenPostion[0], { backgroundColor: rgb(194,83,28), height: px(8), width: px(8) } ],
@@ -113,8 +162,8 @@ class App extends Component {
                                     ])}
                                 ></NavPart4>
                                 <NavPart4
-                                    position="1479"
-                                    active={scrollY < 2080/2}
+                                    position={this.state.navScrollPosition? this.state.navScrollPosition[3] : '1479'}
+                                    active={this.state.navScrollPosition? scrollY < this.state.navScrollPosition[4]/2 : '1879/2'}
                                     styleNav=
                                     {tween(scrollY, [
                                         [ navTweenPostion[0], { backgroundColor: rgb(194,83,28), height: px(8), width: px(8) } ],
@@ -134,7 +183,7 @@ class App extends Component {
                                     ])}
                                 ></NavPart4>
                                 <NavPart4
-                                    position="1679"
+                                    position={this.state.navScrollPosition? this.state.navScrollPosition[4] : '1879'}
                                     active={scrollY < 659/2}
                                     styleNav=
                                     {tween(scrollY, [
@@ -174,20 +223,36 @@ class App extends Component {
                                             [[posTopTop-10], { marginTop: px(0), opacity: 1, ease: easeInElastic }],
                                             [[posTopTop+180], { marginTop: px(200), opacity: 0 }]
                                         ])}
-                                        src="assets/images/food/Rissoles-Salad-with-Mustard-Sauce.png" className="sectionPart4__content-img" id="risoles"/>
-                                    <div className="food-desc" id="rissoles_desc">
+                                        onMouseOver={this.showDescription.bind(this)}
+                                        onMouseOut={this.showDescription.bind(this)}
+                                        src="assets/images/food/Rissoles-Salad-with-Mustard-Sauce.png" className="sectionPart4__content-img" id="rissoles"/>
+                                    <FoodDescPart4
+                                        slideLeft="False"
+                                        id="rissoles_desc" 
+                                        ref={(desc) => { this.foodDesc["rissoles"] = desc; }}>
                                         <div className="food-desc__title">Rissoles Salad</div>
                                         <div className="food-desc__subtitle">with Mustard Sauce</div>
                                         <div className="food-desc__fulldesc">
                                             Dutch-style rissoles stuffed with prawns, served on the top of huzaren sla salad with pineapple, apple, cucumber, onion, carrot, potato, and mayonaise-based sauce.</div>
-                                    </div>
+                                    </FoodDescPart4>
+                                    <FoodDescPart4 
+                                        id="bitterballen_desc" 
+                                        ref={(desc) => { this.foodDesc["bitterballen"] = desc; }}>
+                                        <div className="food-desc__title">Bitterballen</div>
+                                        <div className="food-desc__fulldesc">
+                                        Crusted, breaded minced beef ball with
+                                        aromatic truffle oil, served with mustard
+                                        and white soybean dip.</div>
+                                    </FoodDescPart4>
                                     <img
                                         style={tween(scrollY, [
                                             [[posTopTop-230], { marginTop: px(-200), opacity: 0, ease: easeOutElastic}],
                                             [[posTopTop], { marginTop: px(0), opacity: 1 }],
                                             [[posTopTop], { marginTop: px(0), opacity: 1, ease: easeInElastic }],
                                             [[posTopTop+190], { marginTop: px(200), opacity: 0 }]
-                                        ])} 
+                                        ])}
+                                        onMouseOver={this.showDescription.bind(this)}
+                                        onMouseOut={this.showDescription.bind(this)}
                                         src="assets/images/food/Bitterballen.png" className="sectionPart4__content-img" id="bitterballen"/>
                                     <div id="appetizers_title">Appetizers</div>
                                 </SectionPart4>
@@ -198,10 +263,32 @@ class App extends Component {
                                     slide="True"
                                     hide={scrollY <= posTopTop+20}
                                     styleBg={tween(scrollY, [
-                                        [[posTopTop+20], {bottom: percent(100)}],
-                                        [[posTopTop+420], {bottom: percent(0)}]
+                                        [[posTopTop], {bottom: percent(100)}],
+                                        [[posTopTop+this.state.scrollDiff], {bottom: percent(0)}]
                                     ])}>
                                     <div id="mains_title">Main Course</div>
+                                    <div className="food-desc" id="kerrie_desc">
+                                        <div className="food-desc__subtitle">Garnalen</div>
+                                        <div className="food-desc__title">Portuguesche Kerrie</div>
+                                        <div className="food-desc__fulldesc">
+                                        Stew of giant prawns in red Portuguese curry, served with
+                                        bamboo shoots, cherry tomatoes, green chilli and
+                                        kaffir lime leaves.</div>
+                                    </div>
+                                    <div className="food-desc" id="biefstuk_desc">
+                                        <div className="food-desc__title">Indonesische Biefstuk</div>
+                                        <div className="food-desc__subtitle">van Mevrouw Sonya Lee</div>
+                                        <div className="food-desc__fulldesc">
+                                        Prime Australian tenderloin steak in its own juicy reduction,
+                                        served with potato au gratin, stir fried carrots, baby french beans
+                                        and cherry tomatoes.</div>
+                                    </div>
+                                    <div className="food-desc" id="acarIkan_desc">
+                                        <div className="food-desc__title">Kuah Acar Ikan</div>
+                                        <div className="food-desc__subtitle">Blimbing Wuluh</div>
+                                        <div className="food-desc__fulldesc">
+                                        Yellow stewed fish in tamarind soup.</div>
+                                    </div>
                                     <img 
                                         style={tween(scrollY, [
                                             [[posTopTop+50], { marginTop: px(-500), opacity: 0, ease: easeOutElastic }],
@@ -232,12 +319,18 @@ class App extends Component {
                                     sectionTween="True"
                                     id="desserts"
                                     slide="True"
-                                    hide={scrollY <= posTopTop+420}
+                                    hide={scrollY <= posTopTop+this.state.scrollDiff}
                                     styleBg={tween(scrollY, [
-                                        [[posTopTop+420], {bottom: percent(100)}],
-                                        [[posTopTop+820], {bottom: percent(0)}]
+                                        [[posTopTop+this.state.scrollDiff], {bottom: percent(100)}],
+                                        [[posTopTop+(2*this.state.scrollDiff)], {bottom: percent(0)}]
                                     ])}>
                                     <div id="desserts_title">Dessert</div>
+                                    <div className="food-desc" id="poffertjes_desc">
+                                        <div className="food-desc__title">Poffertjes</div>
+                                        <div className="food-desc__fulldesc">
+                                        Small puffed cakes with tropical fruit compote
+                                        and crusted hazelnuts.</div>
+                                    </div>
                                     <img 
                                         style={tween(scrollY, [
                                         [[posTopTop+420], { marginTop: px(-500), opacity: 0, ease: easeOutElastic}],
@@ -252,42 +345,59 @@ class App extends Component {
                                     sectionTween="True"
                                     id="packages1"
                                     slide="True"
-                                    hide={scrollY <= posTopTop+820}
+                                    hide={scrollY <= posTopTop+(2*this.state.scrollDiff)}
                                     styleBg={tween(scrollY, [
-                                        [[posTopTop+820], {bottom: percent(100)}],
-                                        [[posTopTop+1020], {bottom: percent(0)}]
+                                        [[posTopTop+(2*this.state.scrollDiff)], {bottom: percent(100)}],
+                                        [[posTopTop+(3*this.state.scrollDiff)], {bottom: percent(0)}]
                                     ])}>
                                     <div id="packages_title"
                                         style={tween(scrollY, [
-                                            [[posTopTop+820], { left: -500, opacity: 0, ease: easeOutElastic }],
-                                            [[posTopTop+1020], { left: 0, opacity: 1 }],
-                                            [[posTopTop+1020], { top: 0, opacity: 1 }],
-                                            [[posTopTop+1420], { top: -500, opacity: 1 }]
+                                            [[posTopTop+(2*this.state.scrollDiff)], { left: -500, opacity: 0, ease: easeOutElastic }],
+                                            [[posTopTop+(3*this.state.scrollDiff)], { left: 0, opacity: 1 }],
+                                            [[posTopTop+(3*this.state.scrollDiff)], { top: 0, opacity: 1 }],
+                                            [[posTopTop+(4*this.state.scrollDiff)], { top: -700, opacity: 1 }]
                                             ])}>
                                         <div id="packages1__title">Rijsttafel Package</div>
                                         <div id="packages1__subtitle">available for 2 persons and 5 persons</div>
                                     </div>
                                     <img 
                                         style={tween(scrollY, [
-                                        [[posTopTop+820], { top: -500, opacity: 0, ease: easeOutElastic }],
-                                        [[posTopTop+1020], { top: 0, opacity: 1 }],
-                                        [[posTopTop+1020], { top: 0, opacity: 1 }],
-                                        [[posTopTop+1420], { top: -500, opacity: 1 }]
+                                        [[posTopTop+(2*this.state.scrollDiff)], { top: -500, opacity: 0, ease: easeOutElastic }],
+                                        [[posTopTop+(3*this.state.scrollDiff)], { top: 0, opacity: 1 }],
+                                        [[posTopTop+(3*this.state.scrollDiff)], { top: 0, opacity: 1 }],
+                                        [[posTopTop+(4*this.state.scrollDiff)], { top: -700, opacity: 1 }]
                                         ])}
                                         src="assets/images/food/Rijsttafel-Package-1.png" className="sectionPart4__content-img" id="package1"/>
+                                    <div id="packages1__fulldesc"
+                                        style={tween(scrollY, [
+                                            [[posTopTop+(2*this.state.scrollDiff)], { top: -500, opacity: 0, ease: easeOutElastic }],
+                                            [[posTopTop+(3*this.state.scrollDiff)], { top: 0, opacity: 1 }],
+                                            [[posTopTop+(3*this.state.scrollDiff)], { top: 0, opacity: 1 }],
+                                            [[posTopTop+(4*this.state.scrollDiff)], { top: -700, opacity: 1 }]
+                                            ])}>
+                                        Karedok Betawi<i class="fas fa-circle"></i>Nasi Uduk<i class="fas fa-circle"></i>Bebek Opor<i class="fas fa-circle"></i>
+                                        Semur Lidah Sapi Betawi<i class="fas fa-circle"></i>Sate Lembut Betawi<i class="fas fa-circle"></i>
+                                        Sayur Gambas Udang<i class="fas fa-circle"></i>Tempe Lombok Ijo en Tauco<i class="fas fa-circle"></i>
+                                        Udang Goreng Kering<i class="fas fa-circle"></i>Sambal Ijo Teri<i class="fas fa-circle"></i>Acar Kuning<i class="fas fa-circle"></i>
+                                        Krupuk Udang<i class="fas fa-circle"></i>Emping</div>
                                 </SectionPart4>
                                 <SectionPart4
                                     sectionScroller="True"
                                     sectionTween="True"
                                     id="packages2"
                                     slide="True"
-                                    hide={scrollY < posTopTop+1020}>
+                                    hide={scrollY < posTopTop+(3*this.state.scrollDiff)}>
                                     <img 
                                         style={tween(scrollY, [
-                                        [[posTopTop+1020], { bottom: -500, opacity: 0 }],
-                                        [[posTopTop+1420], { bottom: 0, opacity: 1 }]
+                                        [[posTopTop+(3*this.state.scrollDiff)], { top: 100, opacity: 0 }],
+                                        [[posTopTop+(4*this.state.scrollDiff)], { top: -600, opacity: 1 }]
                                         ])}
                                         src="assets/images/food/Rijsttafel-Package-2.png" className="sectionPart4__content-img" id="package2"/>
+                                    <div id="packages2__fulldesc"
+                                        style={tween(scrollY, [
+                                            [[posTopTop+(3*this.state.scrollDiff)], { marginTop: px(500), opacity: 0 }],
+                                            [[posTopTop+(4*this.state.scrollDiff)], { marginTop: px(-155), opacity: 1 }]])}>
+                                        Es Selendang Mayang</div>
                                 </SectionPart4>
                             </div>
                         }</TrackedDiv>
@@ -296,52 +406,6 @@ class App extends Component {
             </div>
 
         
-        )
-    }
-}
-
-class NavPart4 extends Component {
-    render() {
-        return (
-            <div className={cx(
-                "navPart4__dot",
-                {active: this.props.active})} 
-                style={this.props.styleNav}
-                onClick={() => {
-                    Scroll.animateScroll.scrollTo(this.props.position, {
-                    duration: 1500,
-                    delay: 70,
-                    smooth: true
-                });
-            }}></div>
-        )
-    }
-}
-
-class SectionPart4 extends Component {
-    render() {
-        return (
-            <Element 
-                name={this.props.id} 
-                className={cx(
-                    { "sectionPart4": !this.props.sectionTween },
-                    { sectionScroller : !this.props.sectionTween && this.props.sectionScroller},
-                    { hide : this.props.hide })}>
-                <div
-                    id={this.props.id+"_bg"}
-                    style={this.props.styleBg}
-                    className={cx(
-                        "sectionPart4__bg",
-                        { slide : this.props.slide},
-                        { "sectionScroller__bg" : this.props.sectionScroller})}>
-                </div>
-                <div 
-                    id={this.props.id+"_content"}
-                    className={cx(
-                        "sectionPart4__content")}>
-                    {this.props.children}
-                </div>
-            </Element>
         )
     }
 }
