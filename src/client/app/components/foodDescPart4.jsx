@@ -16,16 +16,21 @@ export default class FoodDescPart4 extends Component {
         this.setState({ show: !this.state.show });
     }
     renderFoodDesc(opacity, x){
-        if (this.props.slideLeft) {
+        if (this.props.slide == "Left") {
             return { 
                 opacity,
                 WebkitTransform: `translate3d(${x}px, 0, 0)`,
                 transform: `translate3d(${x}px, 0, 0)`}
-        } else {
+        } else if (this.props.slide == "Right"){
             return { 
                 opacity,
                 WebkitTransform: `translate3d(-${x}px, 0, 0)`,
                 transform: `translate3d(-${x}px, 0, 0)`}
+        } else if (this.props.slide == "Down") {
+            return { 
+                opacity,
+                WebkitTransform: `translate3d(0, -${x}px, 0)`,
+                transform: `translate3d(0, -${x}px, 0)`}
         }
     }
     render() {

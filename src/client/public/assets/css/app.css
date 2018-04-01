@@ -238,6 +238,26 @@ body { margin: 0 }
 #packages1_content {
     z-index: 11;
 }
+#gif5 {
+    top: 250;
+    left: 100;
+    transform: rotate(20deg);
+}
+#gif6 {
+    top: 100;
+    right: 100;
+    transform: rotate(-20deg);
+}
+#gif7 {    
+    top: -40;
+    left: 45%;
+    transform: rotate(-20deg);
+}
+#gif8 {    
+    top: -350;
+    right: 300;
+    transform: rotate(15deg);
+}
 
 /* section part 4 background */
 #opening_bg {
@@ -308,8 +328,7 @@ body { margin: 0 }
 }
 #poffertjes_desc {
     bottom: 50;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 40%;
     text-align: center;
 }
 
@@ -382,4 +401,44 @@ body { margin: 0 }
     color: #c2531c;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+.desc_tea {
+    color: #fef1c7;
+    font-size: 12;
+}
+#desc_tea1 {
+    left: 47.5%;
+    position: absolute;
+    top: 100px;
+}
+#desc_tea2 {
+    left: 50%;
+    position: absolute;
+    top: 96px;
+    transform: rotate(-20deg);
+}
+#desc_tea3 {
+    left: 53%;
+    position: absolute;
+    top: 77px;
+    transform: rotate(-37deg);
+}
+#desc_tea4 {
+    left: 54.5%;
+    position: absolute;
+    top: 29px;
+    transform: rotate(-66deg);
+}
+#desc_tea5 {
+    left: 53%;
+    position: absolute;
+    top: 100px;
+    transform: rotate(-30deg);
+}
+#desc_tea6 {
+    left: 56%;
+    position: absolute;
+    top: 77px;
+    transform: rotate(-46deg);
 }

@@ -212,10 +212,18 @@ class App extends Component {
                             formulas={[topTop, bottomBottom]}>
                         {(posTopTop, posBottomBottom) =>
                             <div className={cx("sectionScrollerPlaceholder", {fixed: scrollY > posTopTop})}>
-                                <div style={{position: "fixed", zIndex: "20", fontSize: "50"}}>{scrollY} === {posTopTop}</div>
+                                {/* <div style={{position: "fixed", zIndex: "20", fontSize: "50"}}>{scrollY} === {posTopTop}</div> */}
                                 <SectionPart4
                                     sectionScroller="True"
                                     id="appetizers">
+                                    <div id="desc_tea">
+                                        <span className="desc_tea" id="desc_tea1">start</span>
+                                        <span className="desc_tea" id="desc_tea2">with a</span>
+                                        <span className="desc_tea" id="desc_tea3">cup of</span>
+                                        <span className="desc_tea" id="desc_tea4">Kuntskring's</span>
+                                        <span className="desc_tea" id="desc_tea5">special</span>
+                                        <span className="desc_tea" id="desc_tea6">tea</span>
+                                    </div>
                                     <img 
                                         style={tween(scrollY, [
                                             [[posTopTop-300], { marginTop: px(-200), opacity: 0, ease: easeOutElastic}],
@@ -227,7 +235,7 @@ class App extends Component {
                                         onMouseOut={this.showDescription.bind(this)}
                                         src="assets/images/food/Rissoles-Salad-with-Mustard-Sauce.png" className="sectionPart4__content-img" id="rissoles"/>
                                     <FoodDescPart4
-                                        slideLeft="False"
+                                        slide="Left"
                                         id="rissoles_desc" 
                                         ref={(desc) => { this.foodDesc["rissoles"] = desc; }}>
                                         <div className="food-desc__title">Rissoles Salad</div>
@@ -236,6 +244,7 @@ class App extends Component {
                                             Dutch-style rissoles stuffed with prawns, served on the top of huzaren sla salad with pineapple, apple, cucumber, onion, carrot, potato, and mayonaise-based sauce.</div>
                                     </FoodDescPart4>
                                     <FoodDescPart4 
+                                        slide="Right"
                                         id="bitterballen_desc" 
                                         ref={(desc) => { this.foodDesc["bitterballen"] = desc; }}>
                                         <div className="food-desc__title">Bitterballen</div>
@@ -254,7 +263,13 @@ class App extends Component {
                                         onMouseOver={this.showDescription.bind(this)}
                                         onMouseOut={this.showDescription.bind(this)}
                                         src="assets/images/food/Bitterballen.png" className="sectionPart4__content-img" id="bitterballen"/>
-                                    <div id="appetizers_title">Appetizers</div>
+                                    <div id="appetizers_title"
+                                        style={tween(scrollY, [
+                                            [[posTopTop-90], { left: percent(20), opacity: 0, ease: easeOutElastic }],
+                                            [[posTopTop], { left: percent(50), opacity: 1 }],
+                                            [[posTopTop+220], { left: percent(50), opacity: 1, ease: easeInElastic }],
+                                            [[posTopTop+this.state.scrollDiff], { left: percent(70), opacity: 0 }]
+                                        ])}>Appetizers</div>
                                 </SectionPart4>
                                 <SectionPart4
                                     sectionScroller="True"
@@ -266,29 +281,44 @@ class App extends Component {
                                         [[posTopTop], {bottom: percent(100)}],
                                         [[posTopTop+this.state.scrollDiff], {bottom: percent(0)}]
                                     ])}>
-                                    <div id="mains_title">Main Course</div>
-                                    <div className="food-desc" id="kerrie_desc">
+                                    <div id="mains_title"
+                                        style={tween(scrollY, [
+                                            [[posTopTop+110], { left: percent(20), opacity: 0, ease: easeOutElastic }],
+                                            [[posTopTop+220], { left: percent(50), opacity: 1 }],
+                                            [[posTopTop+(this.state.scrollDiff)], { left: percent(50), opacity: 1, ease: easeInElastic }],
+                                            [[posTopTop+(this.state.scrollDiff+30)], { left: percent(70), opacity: 0 }]
+                                        ])}>Main Course</div>
+                                    <FoodDescPart4
+                                        slide="Down"
+                                        id="kerrie_desc" 
+                                        ref={(desc) => { this.foodDesc["kerrie"] = desc; }}>
                                         <div className="food-desc__subtitle">Garnalen</div>
                                         <div className="food-desc__title">Portuguesche Kerrie</div>
                                         <div className="food-desc__fulldesc">
                                         Stew of giant prawns in red Portuguese curry, served with
                                         bamboo shoots, cherry tomatoes, green chilli and
                                         kaffir lime leaves.</div>
-                                    </div>
-                                    <div className="food-desc" id="biefstuk_desc">
+                                    </FoodDescPart4>
+                                    <FoodDescPart4
+                                        slide="Down"
+                                        id="biefstuk_desc" 
+                                        ref={(desc) => { this.foodDesc["biefstuk"] = desc; }}>
                                         <div className="food-desc__title">Indonesische Biefstuk</div>
                                         <div className="food-desc__subtitle">van Mevrouw Sonya Lee</div>
                                         <div className="food-desc__fulldesc">
                                         Prime Australian tenderloin steak in its own juicy reduction,
                                         served with potato au gratin, stir fried carrots, baby french beans
                                         and cherry tomatoes.</div>
-                                    </div>
-                                    <div className="food-desc" id="acarIkan_desc">
+                                    </FoodDescPart4>
+                                    <FoodDescPart4
+                                        slide="Down"
+                                        id="acarIkan_desc" 
+                                        ref={(desc) => { this.foodDesc["acarIkan"] = desc; }}>
                                         <div className="food-desc__title">Kuah Acar Ikan</div>
                                         <div className="food-desc__subtitle">Blimbing Wuluh</div>
                                         <div className="food-desc__fulldesc">
                                         Yellow stewed fish in tamarind soup.</div>
-                                    </div>
+                                    </FoodDescPart4>
                                     <img 
                                         style={tween(scrollY, [
                                             [[posTopTop+50], { marginTop: px(-500), opacity: 0, ease: easeOutElastic }],
@@ -296,6 +326,8 @@ class App extends Component {
                                             [[posTopTop+220], { marginTop: px(0), opacity: 1, ease: easeInElastic }],
                                             [[posTopTop+680], { marginTop: px(200), opacity: 0 }]
                                         ])}
+                                        onMouseOver={this.showDescription.bind(this)}
+                                        onMouseOut={this.showDescription.bind(this)}
                                         src="assets/images/food/Garnalen-Portuguesche-Kerrie.png" className="sectionPart4__content-img" id="kerrie"/>
                                     <img
                                         style={tween(scrollY, [
@@ -304,6 +336,9 @@ class App extends Component {
                                             [[posTopTop+250], { marginTop: px(0), opacity: 1, ease: easeInElastic }],
                                             [[posTopTop+700], { marginTop: px(200), opacity: 0 }]
                                         ])}
+
+                                        onMouseOver={this.showDescription.bind(this)}
+                                        onMouseOut={this.showDescription.bind(this)}
                                         src="assets/images/food/Indonesische-Biefstuk-van-Mevrouw-Sonya-Lee.png" className="sectionPart4__content-img" id="biefstuk"/>
                                     <img
                                         style={tween(scrollY, [
@@ -312,6 +347,8 @@ class App extends Component {
                                             [[posTopTop+270], { marginTop: px(0), opacity: 1, ease: easeInElastic }],
                                             [[posTopTop+720], { marginTop: px(200), opacity: 0 }]
                                         ])}
+                                        onMouseOver={this.showDescription.bind(this)}
+                                        onMouseOut={this.showDescription.bind(this)}
                                         src="assets/images/food/Kuah-Acar-Ikan-Blimbing-Wuluh.png" className="sectionPart4__content-img" id="acarIkan"/>
                                 </SectionPart4>
                                 <SectionPart4
@@ -324,20 +361,31 @@ class App extends Component {
                                         [[posTopTop+this.state.scrollDiff], {bottom: percent(100)}],
                                         [[posTopTop+(2*this.state.scrollDiff)], {bottom: percent(0)}]
                                     ])}>
-                                    <div id="desserts_title">Dessert</div>
-                                    <div className="food-desc" id="poffertjes_desc">
+                                    <div id="desserts_title"
+                                        style={tween(scrollY, [
+                                            [[posTopTop+(this.state.scrollDiff+30)], { left: percent(20), opacity: 0, ease: easeOutElastic }],
+                                            [[posTopTop+(this.state.scrollDiff+60)], { left: percent(50), opacity: 1 }],
+                                            [[posTopTop+(2*this.state.scrollDiff)], { left: percent(50), opacity: 1, ease: easeInElastic }],
+                                            [[posTopTop+(2*this.state.scrollDiff+30)], { left: percent(70), opacity: 0 }]
+                                        ])}>Dessert</div>
+                                    <FoodDescPart4
+                                        slide="Down"
+                                        id="poffertjes_desc" 
+                                        ref={(desc) => { this.foodDesc["poffertjes"] = desc; }}>
                                         <div className="food-desc__title">Poffertjes</div>
                                         <div className="food-desc__fulldesc">
                                         Small puffed cakes with tropical fruit compote
                                         and crusted hazelnuts.</div>
-                                    </div>
+                                    </FoodDescPart4>
                                     <img 
                                         style={tween(scrollY, [
                                         [[posTopTop+420], { marginTop: px(-500), opacity: 0, ease: easeOutElastic}],
                                         [[posTopTop+602], { marginTop: px(0), opacity: 1 }],
-                                        [[posTopTop+602], { marginTop: px(0), opacity: 1, ease: easeInElastic }],
-                                        [[posTopTop+1021], { marginTop: px(200), opacity: 0}],
+                                        [[posTopTop+800], { marginTop: px(0), opacity: 1, ease: easeInElastic }],
+                                        [[posTopTop+(2*this.state.scrollDiff+300)], { marginTop: px(200), opacity: 0}],
                                         ])}
+                                        onMouseOver={this.showDescription.bind(this)}
+                                        onMouseOut={this.showDescription.bind(this)}
                                         src="assets/images/food/Poffertjes.png" className="sectionPart4__content-img" id="poffertjes"/>
                                 </SectionPart4>
                                 <SectionPart4
@@ -370,7 +418,7 @@ class App extends Component {
                                         src="assets/images/food/Rijsttafel-Package-1.png" className="sectionPart4__content-img" id="package1"/>
                                     <div id="packages1__fulldesc"
                                         style={tween(scrollY, [
-                                            [[posTopTop+(2*this.state.scrollDiff)], { top: -500, opacity: 0, ease: easeOutElastic }],
+                                            [[posTopTop+(3*this.state.scrollDiff-30)], { top: 0, opacity: 0, ease: easeOutElastic }],
                                             [[posTopTop+(3*this.state.scrollDiff)], { top: 0, opacity: 1 }],
                                             [[posTopTop+(3*this.state.scrollDiff)], { top: 0, opacity: 1 }],
                                             [[posTopTop+(4*this.state.scrollDiff)], { top: -700, opacity: 1 }]
@@ -380,6 +428,24 @@ class App extends Component {
                                         Sayur Gambas Udang<i class="fas fa-circle"></i>Tempe Lombok Ijo en Tauco<i class="fas fa-circle"></i>
                                         Udang Goreng Kering<i class="fas fa-circle"></i>Sambal Ijo Teri<i class="fas fa-circle"></i>Acar Kuning<i class="fas fa-circle"></i>
                                         Krupuk Udang<i class="fas fa-circle"></i>Emping</div>
+                                        <img src="assets/images/photos/nongif_1.jpg"
+                                            className="sectionPart4__content-gif"
+                                            id="gif5"
+                                            style={tween(scrollY, [
+                                                [[posTopTop+(2*this.state.scrollDiff+200)], { left: -500, opacity: 0, ease: easeOutElastic }],
+                                                [[posTopTop+(3*this.state.scrollDiff)], { left: 100, opacity: 1 }],
+                                                [[posTopTop+(3*this.state.scrollDiff)], { top: 250, opacity: 1 }],
+                                                [[posTopTop+(4*this.state.scrollDiff)], { top: -450, opacity: 1 }]
+                                                ])}/>
+                                        <img src="assets/images/photos/nongif_2.jpg"
+                                            className="sectionPart4__content-gif"
+                                            id="gif6"
+                                            style={tween(scrollY, [
+                                                [[posTopTop+(2*this.state.scrollDiff+100)], { right: -500, opacity: 0, ease: easeOutElastic }],
+                                                [[posTopTop+(3*this.state.scrollDiff)], { right: 100, opacity: 1 }],
+                                                [[posTopTop+(3*this.state.scrollDiff)], { top: 100, opacity: 1 }],
+                                                [[posTopTop+(4*this.state.scrollDiff)], { top: -600, opacity: 1 }]
+                                                ])}/>
                                 </SectionPart4>
                                 <SectionPart4
                                     sectionScroller="True"
@@ -398,14 +464,24 @@ class App extends Component {
                                             [[posTopTop+(3*this.state.scrollDiff)], { marginTop: px(500), opacity: 0 }],
                                             [[posTopTop+(4*this.state.scrollDiff)], { marginTop: px(-155), opacity: 1 }]])}>
                                         Es Selendang Mayang</div>
+                                    <img src="assets/images/photos/nongif_3.jpg"
+                                        className="sectionPart4__content-gif"
+                                        id="gif7"
+                                        style={tween(scrollY, [
+                                            [[posTopTop+(3*this.state.scrollDiff)], { marginTop: px(500), opacity: 0 }],
+                                            [[posTopTop+(4*this.state.scrollDiff)], { marginTop: px(0), opacity: 1 }]])}/>
+                                    <img src="assets/images/photos/nongif_4.jpg"
+                                        className="sectionPart4__content-gif"
+                                        id="gif8"
+                                        style={tween(scrollY, [
+                                            [[posTopTop+(3*this.state.scrollDiff)], { marginTop: px(500), opacity: 0 }],
+                                            [[posTopTop+(4*this.state.scrollDiff)], { marginTop: px(0), opacity: 1 }]])}/>
                                 </SectionPart4>
                             </div>
                         }</TrackedDiv>
                     </div>
                 }</TrackDocument>
             </div>
-
-        
         )
     }
 }
