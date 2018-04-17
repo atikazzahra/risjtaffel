@@ -5,5 +5,5 @@ import FoodDescPart4 from './foodDescPart4.jsx';
 export {
     NavPart4,
     SectionPart4,
-    FoodDescPart4,
+    FoodDescPart4
 }
