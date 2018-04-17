@@ -28,6 +28,7 @@ export default class History extends Component {
         this.getScrollYPosition = this.getScrollYPosition.bind(this);
         this.loopBackground = this.loopBackground.bind(this);
         this.stopBackground = this.stopBackground.bind(this);
+        this.setActive = this.setActive.bind(this);
     }
     componentDidMount() {
         this.updateDimensions();
@@ -73,14 +74,22 @@ export default class History extends Component {
             }
         }
     }
+    setActive(to){
+        Scroll.animateScroll.scrollToBottom({
+            containerId:'history-container',
+            duration: 90000,
+            smooth: true,
+        })
+    }
     render() {
         const easeOutElastic = new Easer().using('out-elastic').withParameters(0.7, 2);
         const easeInElastic = new Easer().using('in-elastic').withParameters(2, 0.7);
+        var Element = Scroll.Element;
         return (
             <div className="main" id="main">
                 <div className="history">
                     <div style={{position:"fixed", top:16, left:10, zIndex: "10"}}
-                        onClick={this.stopScrolling}><i style={{color: "#eaa30d", cursor: "pointer"}} class="far fa-pause-circle"></i>
+                        onClick={this.stopScrolling}><i style={{color: "#eaa30d", cursor: "pointer"}} className="far fa-pause-circle"></i>
                     </div>
                     <div className={cx(
                         "history-container",
@@ -97,23 +106,29 @@ export default class History extends Component {
                                 The Dutch use the word ‘rijsttafel’ for Indonesian cuisines,
                                 which served completely on the dine table, like the Western’s style.
                                 </div>
-                                <i className="history-start fas fa-chevron-circle-down"
-                                    onClick={() => {
-                                        Scroll.animateScroll.scrollToBottom({
-                                            containerId: "history-container",
-                                            duration: 100000,
-                                            delay: 70,
-                                            smooth: true,
-                                        });
-                                }}></i>
+                                <Scroll.Link activeClass="active"
+                                      to="start"
+                                      containerId="history-container"
+                                      spy={true}
+                                      smooth={true}
+                                      hashSpy={true}
+                                      offset={290}
+                                      duration={2000}
+                                      delay={0}
+                                      isDynamic={true}
+                                      onSetActive={this.setActive}
+                                      ignoreCancelEvents={false}
+                                ><i className="history-start fas fa-chevron-circle-down"></i></Scroll.Link>
                             </div>
                         </SectionPart4>
                         </Observer>
+                        <Scroll.Element name="start">
                         <div style={{
                             height: "50%",
                             background: "linear-gradient(#541e0c, rgba(0,0,0,0.5))"
                         }}></div>
-                        <div className="history-content">
+                        </Scroll.Element>
+                        <div className="history-content" id="history-content">
                             <img src="assets/images/title/TheRijsttafelCulture.png" id="history_title" style={{paddingTop:"600px"}}/>
                             <svg className="history-line">
                                 <line x1="0" y1="0" x2="0" y2="100"

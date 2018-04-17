@@ -535,7 +535,8 @@ body {
 
 #historyimg5 {
     width: 800px;
-    left: 21%;
+    left: 50%;
+    transform: translateX(-50%);
     top: 10%;
 }
 
