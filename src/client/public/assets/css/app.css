@@ -546,18 +546,7 @@ body {
     position: relative;
 }
 .history-content__bg {
-    position: absolute;
+    position: fixed;
     top: 0;
-    height: 100%;
-    width: 100%;
-    background-image: url(../images/bg/BGGIF1_resized_noloop.gif);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
     z-index: -10;
-}
-.restaurant {
-
-}
-.restaurant-containter {
-
 }

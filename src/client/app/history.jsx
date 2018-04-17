@@ -19,6 +19,7 @@ export default class History extends Component {
             sectionHeight: 0,
             scrollY: 0,
             section: 0,
+            image: new Image()
         };
         this.updateDimensions = this.updateDimensions.bind(this);
         this.getSectionRect = this.getSectionRect.bind(this);
@@ -33,6 +34,9 @@ export default class History extends Component {
         this.updateScrollPosition();
         window.addEventListener("resize", this.updateDimensions);
         document.getElementById("history-container").addEventListener("scroll", this.updateScrollPosition);
+        let img = new Image();
+        img.src = "assets/images/bg/BGGIF1_resized_noloop.gif";
+        this.setState({ image: img});
     }
     updateDimensions() {
         this.setState({
@@ -62,8 +66,8 @@ export default class History extends Component {
         let bg = document.getElementById('history-bg');
         if (e.isIntersecting) {
             if(e.target.id != this.state.section && bg != null){
-                let rand = Math.random();
-                bg.style.backgroundImage = 'url(assets/images/bg/BGGIF'+e.target.id+'_resized_noloop.gif?'+rand +')';
+                
+                bg.src = this.state.image.src;
                 this.setState({
                     section: e.target.id});
             }
@@ -82,8 +86,8 @@ export default class History extends Component {
                         "history-container",
                         { mask : this.state.scrollY >= '851'})}
                         id="history-container">
-                        <div style={{marginRight: "-17px"}}>
-                        <Observer onChange={this.stopBackground}>
+                        <Observer
+                            onChange={this.stopBackground}>
                         <SectionPart4 id="opening">
                             <div className="sectionPart4__title">
                                 <img src="assets/images/title/HistoryofRijsttafel.png" id="opening_title"/>
@@ -188,13 +192,14 @@ export default class History extends Component {
                             <div className="history-chapter">
                                 <img src="assets/images/photos/gambar5.gif" id="historyimg5"/>
                             </div>
-                            <div className="history-content__bg" id="history-bg"
+                            <img className="history-content__bg"
+                                id="history-bg"
+                                src={this.state.image.src}
                                 style={tween(this.state.scrollY, [
                                     [[1400], { opacity: 0, ease: easeOutElastic }],
                                     [[2000], { opacity: 1 }]
-                            ])}></div>
+                            ])}/>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
