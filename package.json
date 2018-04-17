@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "devNoServer": "webpack --d --watch",
     "devHot": "webpack-dev-server --content-base=src/client/public --hot --inline",
-    "dev": "webpack-dev-server --content-base=src/client/public --port 8080 --host 0.0.0.0 && node server.js",
+    "dev": "node server.js && webpack-dev-server --content-base=src/client/public --port 8080 --host 0.0.0.0",
     "build": "webpack -p"
   },
   "author": "Atika Azzahra",
@@ -19,6 +19,7 @@
     "classnames": "^2.2.5",
     "d3-array": "^1.2.1",
     "d3-ease": "^1.0.3",
+    "express": "^4.16.3",
     "functional-easing": "^1.0.10",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
