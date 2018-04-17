@@ -9,6 +9,7 @@ import {tweenState} from 'react-tween-state';
 import {SectionPart4, NavPart4, FoodDescPart4} from './components/index.jsx';
 import Animate from 'react-move/Animate';
 import Scroll from 'react-scroll';
+import Observer from '@researchgate/react-intersection-observer';
 
 export default class History extends Component {
     constructor(props){
@@ -16,13 +17,16 @@ export default class History extends Component {
         this.state = {
             sectionWidth: 0,
             sectionHeight: 0,
-            scrollY: 0
+            scrollY: 0,
+            section: 0,
         };
         this.updateDimensions = this.updateDimensions.bind(this);
         this.getSectionRect = this.getSectionRect.bind(this);
         this.stopScrolling = this.stopScrolling.bind(this);
         this.updateScrollPosition = this.updateScrollPosition.bind(this);
         this.getScrollYPosition = this.getScrollYPosition.bind(this);
+        this.loopBackground = this.loopBackground.bind(this);
+        this.stopBackground = this.stopBackground.bind(this);
     }
     componentDidMount() {
         this.updateDimensions();
@@ -48,6 +52,23 @@ export default class History extends Component {
     stopScrolling() {
         window.off();
     }
+    stopBackground(e){
+        if (e.isIntersecting) {
+            this.setState({
+                section: 0});
+        }
+    }
+    loopBackground(e){
+        let bg = document.getElementById('history-bg');
+        if (e.isIntersecting) {
+            if(e.target.id != this.state.section && bg != null){
+                let rand = Math.random();
+                bg.style.backgroundImage = 'url(assets/images/bg/BGGIF'+e.target.id+'_resized_noloop.gif?'+rand +')';
+                this.setState({
+                    section: e.target.id});
+            }
+        }
+    }
     render() {
         const easeOutElastic = new Easer().using('out-elastic').withParameters(0.7, 2);
         const easeInElastic = new Easer().using('in-elastic').withParameters(2, 0.7);
@@ -62,9 +83,10 @@ export default class History extends Component {
                         { mask : this.state.scrollY >= '851'})}
                         id="history-container">
                         <div style={{marginRight: "-17px"}}>
+                        <Observer onChange={this.stopBackground}>
                         <SectionPart4 id="opening">
                             <div className="sectionPart4__title">
-                                <img src="assets/images/title/1.png" id="opening_title"/>
+                                <img src="assets/images/title/HistoryofRijsttafel.png" id="opening_title"/>
                                 <div id="opening_desc">
                                 Rijsttafel come from the word ‘rijst’ which means rice, and ‘tafel’
                                 which means table, which when unified have meanings: rice dishes.
@@ -82,12 +104,13 @@ export default class History extends Component {
                                 }}></i>
                             </div>
                         </SectionPart4>
+                        </Observer>
                         <div style={{
                             height: "50%",
                             background: "linear-gradient(#541e0c, rgba(0,0,0,0.5))"
                         }}></div>
                         <div className="history-content">
-                            <img src="assets/images/title/1.png" id="history_title" style={{paddingTop:"600px"}}/>
+                            <img src="assets/images/title/TheRijsttafelCulture.png" id="history_title" style={{paddingTop:"600px"}}/>
                             <svg className="history-line">
                                 <line x1="0" y1="0" x2="0" y2="100"
                                     style={tween(this.state.scrollY, [
@@ -95,50 +118,54 @@ export default class History extends Component {
                                         [[3000], { strokeDashoffset: px(0) }],
                                     ])}/>
                             </svg>
-                            <div className="history-desc"
-                                style={tween(this.state.scrollY, [
-                                    [[1400], { opacity: 0, ease: easeOutElastic}],
-                                    [[2000], { opacity: 1 }],
-                                ])}>
-                                <div className="history-desc__title">1596</div>
-                                <div className="history-desc__content">
-                                The Dutch came to East Indies Archipelago
-                                to search spices commodities.</div>
-                            </div>
-                            <svg className="history-line">
-                                <line x1="0" y1="0" x2="0" y2="100" 
+                            <Observer onChange={this.loopBackground}>
+                            <section className="history-section" id="1">
+                                <div className="history-desc"
                                     style={tween(this.state.scrollY, [
-                                        [[1500], { strokeDashoffset: px(200), ease: easeOutElastic}],
-                                        [[3000], { strokeDashoffset: px(0) }],
-                                    ])}/>
-                            </svg>
-                            <div className="history-desc"
-                                style={tween(this.state.scrollY, [
-                                    [[1600], { opacity: 0, ease: easeOutElastic}],
-                                    [[2000], { opacity: 1 }],
-                                ])}>
-                                <div className="history-desc__title">1602</div>
-                                <div className="history-desc__content">
-                                Vereenigde Oostindische Compagnie (VOC),
-                                a Dutch trading company was founded.
-                                They made a rule called, vrijgezel cultuur,
-                                which only the noblemen of the Dutch were allowed
-                                to bring thrir wife to East Indies Archipelago. </div>
-                            </div>
-                            <div className="history-chapter">
-                                <img src="assets/images/photos/gambar1.png"
+                                        [[1400], { opacity: 0, ease: easeOutElastic}],
+                                        [[2000], { opacity: 1 }],
+                                    ])}>
+                                    <div className="history-desc__title">1596</div>
+                                    <div className="history-desc__content">
+                                    The Dutch came to East Indies Archipelago
+                                    to search spices commodities.</div>
+                                </div>
+                                <svg className="history-line">
+                                    <line x1="0" y1="0" x2="0" y2="100" 
+                                        style={tween(this.state.scrollY, [
+                                            [[1500], { strokeDashoffset: px(200), ease: easeOutElastic}],
+                                            [[3000], { strokeDashoffset: px(0) }],
+                                        ])}/>
+                                </svg>
+                                <div className="history-desc"
                                     style={tween(this.state.scrollY, [
-                                        [[1500], { marginTop: px(0), ease: easeOutElastic}],
-                                        [[2800], { marginTop: px(-10) }],
-                                    ])}
-                                    id="historyimg1"/>
-                                <img src="assets/images/photos/gambar2.png" 
-                                    style={tween(this.state.scrollY, [
-                                        [[1800], { marginTop: px(100), ease: easeOutElastic}],
-                                        [[4000], { marginTop: px(-200) }],
-                                    ])}
-                                    id="historyimg2"/>
-                            </div>
+                                        [[1600], { opacity: 0, ease: easeOutElastic}],
+                                        [[2000], { opacity: 1 }],
+                                    ])}>
+                                    <div className="history-desc__title">1602</div>
+                                    <div className="history-desc__content">
+                                    Vereenigde Oostindische Compagnie (VOC),
+                                    a Dutch trading company was founded.
+                                    They made a rule called, vrijgezel cultuur,
+                                    which only the noblemen of the Dutch were allowed
+                                    to bring thrir wife to East Indies Archipelago. </div>
+                                </div>
+                                <div className="history-chapter">
+                                    <img src="assets/images/photos/gambar1.png"
+                                        style={tween(this.state.scrollY, [
+                                            [[1500], { marginTop: px(0), ease: easeOutElastic}],
+                                            [[2800], { marginTop: px(-10) }],
+                                        ])}
+                                        id="historyimg1"/>
+                                    <img src="assets/images/photos/gambar2.png" 
+                                        style={tween(this.state.scrollY, [
+                                            [[1800], { marginTop: px(100), ease: easeOutElastic}],
+                                            [[4000], { marginTop: px(-200) }],
+                                        ])}
+                                        id="historyimg2"/>
+                                </div>
+                            </section>
+                            </Observer>
                             <div className="history-desc">
                                 <div className="history-desc__content">
                                 Differences in culture yet food ingredients, gave a big influence,
@@ -161,11 +188,11 @@ export default class History extends Component {
                             <div className="history-chapter">
                                 <img src="assets/images/photos/gambar5.gif" id="historyimg5"/>
                             </div>
-                            <div className="history-content__bg"
+                            <div className="history-content__bg" id="history-bg"
                                 style={tween(this.state.scrollY, [
-                                    [[980], { opacity: 0, ease: easeOutElastic }],
-                                    [[1200], { opacity: 1 }],
-                                ])}></div>
+                                    [[1400], { opacity: 0, ease: easeOutElastic }],
+                                    [[2000], { opacity: 1 }]
+                            ])}></div>
                         </div>
                     </div>
                     </div>
