@@ -99,7 +99,7 @@ export default class History extends Component {
                             onChange={this.stopBackground}>
                         <SectionPart4 id="opening">
                             <div className="sectionPart4__title">
-                                <img src="assets/images/title/HistoryofRijsttafel.png" id="opening_title"/>
+                                <img src="assets/images/title/TheRijsttafelCulture.png" id="opening_title"/>
                                 <div id="opening_desc">
                                 Rijsttafel come from the word ‘rijst’ which means rice, and ‘tafel’
                                 which means table, which when unified have meanings: rice dishes.
@@ -129,7 +129,7 @@ export default class History extends Component {
                         }}></div>
                         </Scroll.Element>
                         <div className="history-content" id="history-content">
-                            <img src="assets/images/title/TheRijsttafelCulture.png" id="history_title" style={{paddingTop:"600px"}}/>
+                            <img src="assets/images/title/HistoryofRijsttafel.png" id="history_title" style={{paddingTop:"600px"}}/>
                             <svg className="history-line">
                                 <line x1="0" y1="0" x2="0" y2="100"
                                     style={tween(this.state.scrollY, [
