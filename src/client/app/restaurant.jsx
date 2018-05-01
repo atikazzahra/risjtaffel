@@ -16,7 +16,7 @@ import {topTop,
 import {rgb, rgba, scale, rotate,
         px, percent, translate3d} from 'react-imation/tween-value-factories';
 import {tweenState} from 'react-tween-state';
-import {SectionPart4, NavPart4, FoodDescPart4} from './components/index.jsx';
+import {SectionPart4, NavPart4, FoodDescPart4, LoadingPage} from './components/index.jsx';
 
 export default class Restaurant extends Component {
     constructor(props){
@@ -28,14 +28,48 @@ export default class Restaurant extends Component {
             sectionHeight: 0,
             navTweenPostion: [],
             navScrollPosition: [],
+            images: [],
+            loading: true,
+            percent: 0
         };
         this.updateDimensions = this.updateDimensions.bind(this);
         this.updateNavData = this.updateNavData.bind(this);
         this.getSectionRect = this.getSectionRect.bind(this);
+        this.loadAllImage = this.loadAllImage.bind(this);
     }
     componentDidMount() {
+        this.loadAllImage();
         this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions);
+    }
+    loadAllImage(){
+        var imgs = document.images,
+            len = imgs.length,
+            counter = 0,
+            self = this;
+
+        [].forEach.call( imgs, function( img ) {
+            imageLoaded(img)
+        });
+
+        function imageLoaded(img) {
+            var newImage = new Image();
+            newImage.src = img.src;
+            newImage.onload = function () {
+                var newState = self.state.images;
+                newState.push(newImage);
+                img.src = newImage.src;
+                var percent = self.state.images.length/len*100;
+                self.setState({percent: percent});
+                counter++;
+
+                if (self.state.images.length === len ) {
+                    setTimeout(function(){
+                        self.setState({loading:false})
+                    }, 300);
+                }
+             }
+        }
     }
 
     showDescription(props) {
@@ -65,6 +99,9 @@ export default class Restaurant extends Component {
         const easeInElastic = new Easer().using('in-elastic').withParameters(2, 0.7);
         return (
             <div className="main">
+                <LoadingPage
+                    active={this.state.loading}
+                    progress={this.state.percent}></LoadingPage>
                 <div className="restaurant">
                     <div className="restaurant-container">
                         <SectionPart4 id="opening">
@@ -422,11 +459,11 @@ export default class Restaurant extends Component {
                                                     [[posTopTop+(3*this.state.scrollDiff)], { top: 0, opacity: 1 }],
                                                     [[posTopTop+(4*this.state.scrollDiff)], { top: -700, opacity: 1 }]
                                                     ])}>
-                                                Karedok Betawi<i class="fas fa-circle"></i>Nasi Uduk<i class="fas fa-circle"></i>Bebek Opor<i class="fas fa-circle"></i>
-                                                Semur Lidah Sapi Betawi<i class="fas fa-circle"></i>Sate Lembut Betawi<i class="fas fa-circle"></i>
-                                                Sayur Gambas Udang<i class="fas fa-circle"></i>Tempe Lombok Ijo en Tauco<i class="fas fa-circle"></i>
-                                                Udang Goreng Kering<i class="fas fa-circle"></i>Sambal Ijo Teri<i class="fas fa-circle"></i>Acar Kuning<i class="fas fa-circle"></i>
-                                                Krupuk Udang<i class="fas fa-circle"></i>Emping</div>
+                                                Karedok Betawi<i className="fas fa-circle"></i>Nasi Uduk<i className="fas fa-circle"></i>Bebek Opor<i className="fas fa-circle"></i>
+                                                Semur Lidah Sapi Betawi<i className="fas fa-circle"></i>Sate Lembut Betawi<i className="fas fa-circle"></i>
+                                                Sayur Gambas Udang<i className="fas fa-circle"></i>Tempe Lombok Ijo en Tauco<i className="fas fa-circle"></i>
+                                                Udang Goreng Kering<i className="fas fa-circle"></i>Sambal Ijo Teri<i className="fas fa-circle"></i>Acar Kuning<i className="fas fa-circle"></i>
+                                                Krupuk Udang<i className="fas fa-circle"></i>Emping</div>
                                                 <img src="assets/images/photos/nongif_1.jpg"
                                                     className="sectionPart4__content-gif"
                                                     id="gif5"
