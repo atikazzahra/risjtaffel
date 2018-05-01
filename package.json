@@ -37,6 +37,7 @@
     "react-scroll-to-component": "^1.0.1",
     "react-slot": "^0.1.2",
     "react-slotted": "^0.1.0",
+    "react-sound": "^1.2.0",
     "react-spark-scroll-gsap": "^4.0.0",
     "react-state-animation": "^0.1.0",
     "react-to-target-auto-scroll": "^1.0.4",
