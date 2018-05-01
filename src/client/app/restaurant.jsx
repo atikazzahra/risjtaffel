@@ -27,11 +27,11 @@ export default class Restaurant extends Component {
             sectionWidth: 0,
             sectionHeight: 0,
             navTweenPostion: [],
-            navScrollPosition: []
+            navScrollPosition: [],
         };
         this.updateDimensions = this.updateDimensions.bind(this);
         this.updateNavData = this.updateNavData.bind(this);
-        this.getSectionRect = this.getSectionRect.bind(this)
+        this.getSectionRect = this.getSectionRect.bind(this);
     }
     componentDidMount() {
         this.updateDimensions();

@@ -6,7 +6,7 @@ import {tween, ease} from 'react-imation';
 import {rgb, rgba, scale, rotate,
         px, percent, translate3d} from 'react-imation/tween-value-factories';
 import {tweenState} from 'react-tween-state';
-import {SectionPart4, NavPart4, FoodDescPart4} from './components/index.jsx';
+import {SectionPart4, LoadingPage} from './components/index.jsx';
 import Animate from 'react-move/Animate';
 import Scroll from 'react-scroll';
 import Observer from '@researchgate/react-intersection-observer';
@@ -19,7 +19,10 @@ export default class History extends Component {
             sectionHeight: 0,
             scrollY: 0,
             section: 0,
-            image: new Image()
+            image: new Image(),
+            images: [],
+            loading: true,
+            percent: 0
         };
         this.updateDimensions = this.updateDimensions.bind(this);
         this.getSectionRect = this.getSectionRect.bind(this);
@@ -29,15 +32,43 @@ export default class History extends Component {
         this.loopBackground = this.loopBackground.bind(this);
         this.stopBackground = this.stopBackground.bind(this);
         this.setActive = this.setActive.bind(this);
+        this.loadAllImage = this.loadAllImage.bind(this);
     }
     componentDidMount() {
+        this.loadAllImage();
         this.updateDimensions();
         this.updateScrollPosition();
         window.addEventListener("resize", this.updateDimensions);
         document.getElementById("history-container").addEventListener("scroll", this.updateScrollPosition);
-        let img = new Image();
-        img.src = "assets/images/bg/BGGIF1_resized_noloop.gif";
-        this.setState({ image: img });
+    }
+    loadAllImage(){
+        var imgs = document.images,
+            len = imgs.length,
+            counter = 0,
+            self = this;
+
+        [].forEach.call( imgs, function( img ) {
+            imageLoaded(img)
+        });
+
+        function imageLoaded(img) {
+            var newImage = new Image();
+            newImage.src = img.src;
+            newImage.onload = function () {
+                var newState = self.state.images;
+                newState.push(newImage);
+                img.src = newImage.src;
+                var percent = self.state.images.length/len*100;
+                self.setState({percent: percent});
+                counter++;
+
+                if (self.state.images.length === len ) {
+                    setTimeout(function(){
+                        self.setState({loading:false})
+                    }, 300);
+                }
+             }
+        }
     }
     updateDimensions() {
         this.setState({
@@ -68,7 +99,7 @@ export default class History extends Component {
         if (e.isIntersecting) {
             if(e.target.id != this.state.section && bg != null){
                 
-                bg.src = this.state.image.src;
+                bg.src = bg.src;
                 this.setState({
                     section: e.target.id});
             }
@@ -87,6 +118,9 @@ export default class History extends Component {
         var Element = Scroll.Element;
         return (
             <div className="main" id="main">
+                <LoadingPage
+                    active={this.state.loading}
+                    progress={this.state.percent}></LoadingPage>
                 <div className="history">
                     <div style={{position:"fixed", top:16, left:10, zIndex: "10"}}
                         onClick={this.stopScrolling}><i style={{color: "#eaa30d", cursor: "pointer"}} className="far fa-pause-circle"></i>
@@ -209,7 +243,7 @@ export default class History extends Component {
                             </div>
                             <img className="history-content__bg"
                                 id="history-bg"
-                                src={this.state.image.src}
+                                src="assets/images/bg/BGGIF1_resized_noloop.gif"
                                 style={tween(this.state.scrollY, [
                                     [[1400], { opacity: 0, ease: easeOutElastic }],
                                     [[2000], { opacity: 1 }]
