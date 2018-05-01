@@ -552,3 +552,12 @@ body {
     z-index: -10;
     -webkit-filter: brightness(55%);
 }
+
+/*progress line*/
+.rc-progress-line {
+    width: 300;
+    position: relative;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}

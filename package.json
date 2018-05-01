@@ -23,11 +23,13 @@
     "express": "^4.16.3",
     "functional-easing": "^1.0.10",
     "intersection-observer": "^0.5.0",
+    "rc-progress": "^2.2.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-full-page": "^0.1.2",
     "react-imation": "^0.5.3",
     "react-move": "^2.7.0",
+    "react-on-images-loaded": "^2.1.9",
     "react-on-screen": "^2.0.4",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
@@ -43,12 +45,12 @@
     "react-tween-state": "^0.1.5",
     "react-waypoint": "^8.0.1",
     "scroll-to": "0.0.2",
-    "scrollmagic": "^2.0.5",
     "vivus": "^0.4.3",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0"
+    "babel-core": "^6.26.0",
+    "image-webpack-loader": "^4.2.0"
   }
 }

@@ -37,7 +37,7 @@ export default class History extends Component {
         document.getElementById("history-container").addEventListener("scroll", this.updateScrollPosition);
         let img = new Image();
         img.src = "assets/images/bg/BGGIF1_resized_noloop.gif";
-        this.setState({ image: img});
+        this.setState({ image: img });
     }
     updateDimensions() {
         this.setState({
@@ -78,7 +78,7 @@ export default class History extends Component {
         Scroll.animateScroll.scrollToBottom({
             containerId:'history-container',
             duration: 90000,
-            smooth: true,
+            smooth: "linear",
         })
     }
     render() {
@@ -112,7 +112,7 @@ export default class History extends Component {
                                       spy={true}
                                       smooth={true}
                                       hashSpy={true}
-                                      offset={290}
+                                      offset={590}
                                       duration={2000}
                                       delay={0}
                                       isDynamic={true}

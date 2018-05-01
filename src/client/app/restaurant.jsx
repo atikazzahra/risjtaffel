@@ -17,7 +17,6 @@ import {rgb, rgba, scale, rotate,
         px, percent, translate3d} from 'react-imation/tween-value-factories';
 import {tweenState} from 'react-tween-state';
 import {SectionPart4, NavPart4, FoodDescPart4} from './components/index.jsx';
-import Animate from 'react-move/Animate';
 
 export default class Restaurant extends Component {
     constructor(props){
