@@ -81,8 +81,7 @@ export default class History extends Component {
             sectionHeight: this.getSectionRect().height});
     }
     updateScrollPosition() {
-        this.setState({
-            scrollY: this.getScrollYPosition()});
+        this.setState({scrollY: this.getScrollYPosition()});
     }
     getSectionRect() {
         return document.getElementById("main").getBoundingClientRect();
@@ -96,7 +95,6 @@ export default class History extends Component {
             return "0";
         }
         var top = element.getBoundingClientRect().top +this.state.scrollY;
-        console.log(id+"=>"+top);
         return top;
     }
     stopScrolling() {
@@ -104,12 +102,10 @@ export default class History extends Component {
     }
     stopBackground(e){
         if (e.isIntersecting) {
-            this.setState({
-                section: 0});
+            this.setState({section: 0});
         }
     }
     updateBackground(e){
-        //console.log(e.id);
         console.log("section awal:"+this.state.section);
         if (e.id != this.state.section) {
             let bg = document.getElementById("section-"+e.id);

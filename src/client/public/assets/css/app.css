@@ -301,6 +301,7 @@ body {
     font-family: Alice;
     font-size: 12px;
     margin-top: 10px;
+    line-height: 1.4;
 }
 /*appetizers*/
 #appetizers .food-desc__title, 

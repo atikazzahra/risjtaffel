@@ -17,6 +17,7 @@ import {rgb, rgba, scale, rotate,
         px, percent, translate3d} from 'react-imation/tween-value-factories';
 import {tweenState} from 'react-tween-state';
 import {SectionPart4, NavPart4, FoodDescPart4, LoadingPage} from './components/index.jsx';
+import Scroll from 'react-scroll';
 
 export default class Restaurant extends Component {
     constructor(props){
@@ -30,17 +31,54 @@ export default class Restaurant extends Component {
             navScrollPosition: [],
             images: [],
             loading: true,
-            percent: 0
+            percent: 0,
+            scrollY: 0,
         };
         this.updateDimensions = this.updateDimensions.bind(this);
         this.updateNavData = this.updateNavData.bind(this);
         this.getSectionRect = this.getSectionRect.bind(this);
         this.loadAllImage = this.loadAllImage.bind(this);
+        this.updateScrollPosition = this.updateScrollPosition.bind(this);
     }
     componentDidMount() {
         this.loadAllImage();
         this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions);
+        // window.addEventListener('mousewheel', this.updateScrollPosition);
+    }
+    updateScrollPosition() {
+        var y = document.body.scrollTop;
+        var offset = y-this.state.scrollY;
+        var scroll = 0;
+        var len = this.state.navScrollPosition.length;
+        console.log(offset);
+        if (offset >= 0){
+            /* down */
+            var found = false;
+            var idx = 0;
+            while (!found && idx < len) {
+                if (y <= this.state.navScrollPosition[idx]) {
+                    scroll = this.state.navScrollPosition[idx];
+                    found = true;
+                }
+                idx++;
+            }
+        } else {
+            /* up */
+            var found = false;
+            var idx = len;
+            while (!found && idx+1 > 0) {
+                if (y >= this.state.navScrollPosition[idx]) {
+                    scroll = this.state.navScrollPosition[idx];
+                    found = true;
+                }
+                idx--;
+            }
+        }
+        this.setState({scrollY: y});
+        Scroll.animateScroll.scrollTo(scroll, {
+            duration: 1500,
+            smooth: true});
     }
     loadAllImage(){
         var imgs = document.images,
@@ -103,7 +141,7 @@ export default class Restaurant extends Component {
                     active={this.state.loading}
                     progress={this.state.percent}></LoadingPage>
                 <div className="restaurant">
-                    <div className="restaurant-container">
+                    <div className="restaurant-container" id="restaurant-container">
                         <SectionPart4 id="opening">
                             <img src="assets/images/photos/nongif_2.jpg" className="sectionPart4__content-gif" id="gif1"/>
                             <img src="assets/images/photos/todaysrijsttafel_gif2.gif" className="sectionPart4__content-gif" id="gif2"/>
