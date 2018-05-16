@@ -24,15 +24,15 @@ export default class History extends Component {
             images: [],
             
             loading: true,
-            percent: 0,
-            scroll: false
-            
+            percent: 0
         };
         this.updateDimensions = this.updateDimensions.bind(this);
         this.getSectionRect = this.getSectionRect.bind(this);
-        this.scrollAction = this.scrollAction.bind(this);
+        this.stopScrolling = this.stopScrolling.bind(this);
         this.updateScrollPosition = this.updateScrollPosition.bind(this);
         this.getScrollYPosition = this.getScrollYPosition.bind(this);
+        this.updateBackground = this.updateBackground.bind(this);
+        this.stopBackground = this.stopBackground.bind(this);
         this.setActive = this.setActive.bind(this);
         this.loadAllImage = this.loadAllImage.bind(this);
         this.getRect = this.getRect.bind(this);
@@ -41,12 +41,13 @@ export default class History extends Component {
         this.loadAllImage();
         this.updateDimensions();
         this.updateScrollPosition();
-        var self = this;
         window.addEventListener("resize", this.updateDimensions);
         document.getElementById("history-container").addEventListener("scroll", this.updateScrollPosition);
-        document.getElementById("history-container").addEventListener("wheel", function(){
-            self.setState({scroll:false})
-        });
+        // inView('.history-section')
+        //     .on('enter', this.updateBackground);
+        // inView('#start')
+        //     .on('enter', ()=>{ console.log("start");this.setState({section: 0})});
+
     }
     loadAllImage(){
         var imgs = document.images,
@@ -93,32 +94,31 @@ export default class History extends Component {
         if (element == null) {
             return "0";
         }
-        let height = document.documentElement.clientHeight;
-        var bottom = element.getBoundingClientRect().top + this.state.scrollY - height;
-        return bottom;
+        var top = element.getBoundingClientRect().top +this.state.scrollY;
+        return top;
     }
-    scrollAction() {
-        if (this.state.scroll) {
-            this.setState({scroll:false});
-        } else {
-            this.scrollToDistance();
+    stopScrolling() {
+        window.off();
+    }
+    stopBackground(e){
+        if (e.isIntersecting) {
+            this.setState({section: 0});
+        }
+    }
+    updateBackground(e){
+        console.log("section awal:"+this.state.section);
+        if (e.id != this.state.section) {
+            let bg = document.getElementById("section-"+e.id);
+            console.log(e.id);
+            bg.src = bg.src;
+            console.log("masuk:"+e.id);
+            this.setState({ section: e.id });
         }
     }
     setActive(to){
-        this.setState({scroll:true});
-        this.scrollToDistance();
-    }
-    scrollToDistance(){
-        var this1 = this;
-        this1.setState({scroll:true});
         Scroll.animateScroll.scrollToBottom({
             containerId:'history-container',
-            duration: function () { 
-                var element = document.getElementById("history-container");
-                var velocity = (element.scrollHeight-1249)/200000;
-                var distance = element.scrollHeight-this1.getScrollYPosition();
-                var duration = distance/velocity;
-                return duration; },
+            duration: 200000,
             smooth: "linear",
         })
     }
@@ -133,19 +133,8 @@ export default class History extends Component {
                     active={this.state.loading}
                     progress={this.state.percent}></LoadingPage>
                 <div className="history">
-                    <div
-                        style={tween(this.state.scrollY, [
-                            [[1100], { opacity:0, ease: easeOutElastic}],
-                            [[1300], { opacity:1 }],
-                        ])} 
-                        className="history-button-scroll"
-                        onClick={this.scrollAction}>
-                        {this.state.scroll ? (
-                            <i style={{color: "#eaa30d", cursor: "pointer"}} className="far fa-pause-circle"></i>
-                        ) : (
-                            <i style={{color: "#eaa30d", cursor: "pointer"}} className="far fa-play-circle"></i>
-                        )}
-                        
+                    <div style={{position:"fixed", top:16, left:10, zIndex: "10"}}
+                        onClick={this.stopScrolling}><i style={{color: "#eaa30d", cursor: "pointer"}} className="far fa-pause-circle"></i>
                     </div>
                     <div className={cx(
                         "history-container",
@@ -171,14 +160,12 @@ export default class History extends Component {
                                       delay={0}
                                       isDynamic={true}
                                       onSetActive={this.setActive}
-                                      ignoreCancelEvents={true}
+                                      ignoreCancelEvents={false}
                                 ><i className="history-start fas fa-chevron-circle-down"></i></Scroll.Link>
                             </div>
                         </SectionPart4>
                         <Scroll.Element name="start" id="start">
-                        <div
-                            id="history-start" 
-                            style={{
+                        <div style={{
                             height: "50%",
                             background: "linear-gradient(#541e0c, rgba(0,0,0,0.5))"
                         }}></div>
@@ -226,23 +213,23 @@ export default class History extends Component {
                                     They made a rule called, vrijgezel cultuur,
                                     which only the noblemen of the Dutch were allowed
                                     to bring thrir wife to East Indies Archipelago. </div>
-                                    <div style={{'height':'200px'}}></div>
+                                    <div style={{'height':'100px'}}></div>
                                 </div>
-                                <div className="history-chapter-two" id="chap1">
+                                <div className="history-chapter" id="chap1">
                                     <img src="assets/images/photos/gambar1.png"
-                                        className="history-img-1 img-left"
                                         style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg1")], { opacity: 0}],
-                                            [[this.getRect("historyimg1")+200], { opacity: 0.3}],
-                                            [[this.getRect("historyimg1")+400], { opacity: 1 }],
+                                            [[this.getRect("chap1")-500], { marginTop: px(300), opacity: 0}],
+                                            [[this.getRect("chap1")-250], { marginTop: px(150), opacity: 0.3}],
+                                            [[this.getRect("chap1")], { marginTop: px(0), opacity: 1 }],
+                                            [[this.getRect("chap1")+250], { marginTop: px(-150), opacity: 1 }],
                                         ])}
                                         id="historyimg1"/>
                                     <img src="assets/images/photos/gambar2.png" 
-                                        className="history-img-2"
                                         style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg2")], { opacity: 0}],
-                                            [[this.getRect("historyimg2")+200], { opacity: 0.3 }],
-                                            [[this.getRect("historyimg2")+400], { opacity: 1 }]
+                                            [[this.getRect("chap1")-100], { marginTop: px(200), opacity: 0}],
+                                            [[this.getRect("chap1")+150], { marginTop: px(50), opacity: 0.85 }],
+                                            [[this.getRect("chap1")+400], { marginTop: px(-100), opacity: 1 }],
+                                            [[this.getRect("chap1")+650], { marginTop: px(-250), opacity: 1 }],
                                         ])}
                                         id="historyimg2"/>
                                 </div>
@@ -253,26 +240,30 @@ export default class History extends Component {
                                         specially in the eating habits in certain families.</div>
                                     </div>
                                 </div>
-                                <div className="history-chapter-two" id="chap3">
+                                <div className="history-chapter" id="chap3">
                                     <img src="assets/images/photos/gambar3.png"
-                                        className="history-img-1 img-left"
                                         style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg3")], { opacity: 0}],
-                                            [[this.getRect("historyimg3")+200], { opacity: 0.3}],
-                                            [[this.getRect("historyimg3")+400], { opacity: 1 }],
+                                            [[this.getRect("chap3")-500], { marginTop: px(0), opacity: 0}],
+                                            [[this.getRect("chap3")-250], { marginTop: px(-150), opacity: 1}],
+                                            [[this.getRect("chap3")], { marginTop: px(-300), opacity: 1 }],
+                                            [[this.getRect("chap3")+250], { marginTop: px(-450), opacity: 1 }],
                                         ])}
                                         id="historyimg3"/>
                                     <img src="assets/images/photos/gambar4.png"
-                                        className="history-img-2"
                                         style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg4")], { opacity: 0}],
-                                            [[this.getRect("historyimg4")+200], { opacity: 0.3}],
-                                            [[this.getRect("historyimg4")+400], { opacity: 1 }],
+                                            [[this.getRect("chap3")-200], { marginTop: px(50), opacity: 0}],
+                                            [[this.getRect("chap3")-50], { marginTop: px(-150), opacity: 1 }],
+                                            [[this.getRect("chap3")+200], { marginTop: px(-300), opacity: 1 }],
+                                            [[this.getRect("chap3")+550], { marginTop: px(-450), opacity: 1 }],
                                         ])}
                                         id="historyimg4"/>
                                 </div>
-                                <div className="history-chapter-two" id="chap4">
+                                <div className="history-chapter" id="chap4">
                                     <img src="assets/images/photos/gambar5.gif"
+                                        style={tween(this.state.scrollY, [
+                                            [[this.getRect("chap4")-400], { marginTop: px(-100)}],
+                                            [[this.getRect("chap4")], { marginTop: px(-200) }],
+                                        ])}
                                         className="history-chapter_one-image"
                                         id="historyimg5"/>
                                 </div>
@@ -287,52 +278,60 @@ export default class History extends Component {
                                         specially in the eating habits in certain families.</div>
                                     </div>
                                 </div>
-                                <div className="history-chapter-two" id="chap6">
+                                <div className="history-chapter" id="chap6">
                                     <img src="assets/images/photos/gambar6.gif"
                                     className="history-chapter_one-image"
                                     id="historyimg6"
-                                    />
+                                    style={tween(this.state.scrollY, [
+                                        [[this.getRect("chap6")-400], { marginTop: px(200)}],
+                                        [[this.getRect("chap6")], { marginTop: px(-100) }],
+                                    ])}/>
                                 </div>
                                 <div className="history-chapter" id="chap7">
-                                    <img className="history-chapter_h-image img-left" src="assets/images/photos/gambar7.gif"
+                                    <img className="history-chapter_h-image" src="assets/images/photos/gambar7.gif"
                                         style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg7")], { opacity: 0}],
-                                            [[this.getRect("historyimg7")+200], { opacity: 0.3}],
-                                            [[this.getRect("historyimg7")+400], { opacity: 1 }],
+                                            [[this.getRect("chap7")-500], { marginTop: px(300), opacity: 0}],
+                                            [[this.getRect("chap7")-250], { marginTop: px(150), opacity: 0.3}],
+                                            [[this.getRect("chap7")], { marginTop: px(0), opacity: 1 }],
+                                            [[this.getRect("chap7")+250], { marginTop: px(-150), opacity: 1 }],
                                         ])}
-                                        id="historyimg7"/>
-                                    <img className="history-chapter_h-image img-right" src="assets/images/photos/gambar8.gif"
+                                        id="historyimg3"/>
+                                    <img className="history-chapter_h-image" src="assets/images/photos/gambar8.gif"
                                         style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg8")], { opacity: 0}],
-                                            [[this.getRect("historyimg8")+200], { opacity: 0.3}],
-                                            [[this.getRect("historyimg8")+400], { opacity: 1 }],
+                                            [[this.getRect("chap7")-100], { marginTop: px(200), opacity: 0}],
+                                            [[this.getRect("chap7")+50], { marginTop: px(0), opacity: 0.85 }],
+                                            [[this.getRect("chap7")+200], { marginTop: px(-200), opacity: 1 }],
+                                            [[this.getRect("chap7")+350], { marginTop: px(-400), opacity: 1 }],
                                         ])}
-                                        id="historyimg8"/>
+                                        id="historyimg4"/>
                                 </div>
-                                <div className="history-chapter" id="chap8">
-                                    <img className="history-chapter_h-image img-left" src="assets/images/photos/gambar9.png"
+                                <div className="history-chapter short-chap" id="chap8">
+                                    <img className="history-chapter_h-image" src="assets/images/photos/gambar9.png"
                                         style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg9")], { opacity: 0}],
-                                            [[this.getRect("historyimg9")+200], { opacity: 0.3}],
-                                            [[this.getRect("historyimg9")+400], { opacity: 1 }],
+                                            [[this.getRect("chap8")-650], { marginTop: px(0), opacity: 0}],
+                                            [[this.getRect("chap8")-400], { marginTop: px(-150), opacity: 1}],
+                                            [[this.getRect("chap8")-150], { marginTop: px(-300), opacity: 1 }],
+                                            [[this.getRect("chap8")+50], { marginTop: px(-450), opacity: 1 }],
                                         ])}
-                                        id="historyimg9"/>
-                                    <img className="history-chapter_h-image img-right" src="assets/images/photos/gambar10.png"
+                                        id="historyimg3"/>
+                                    <img className="history-chapter_h-image" src="assets/images/photos/gambar10.png"
                                         style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg10")], { opacity: 0}],
-                                            [[this.getRect("historyimg10")+200], { opacity: 0.3}],
-                                            [[this.getRect("historyimg10")+400], { opacity: 1 }],
+                                            [[this.getRect("chap8")-450], { marginTop: px(200), opacity: 0}],
+                                            [[this.getRect("chap8")-300], { marginTop: px(0), opacity: 0.5 }],
+                                            [[this.getRect("chap8")-150], { marginTop: px(-200), opacity: 1 }],
+                                            [[this.getRect("chap8")], { marginTop: px(-400), opacity: 1 }],
                                         ])}
-                                        id="historyimg10"/>
+                                        id="historyimg4"/>
                                 </div>
-                                <div className="history-chapter" id="chap9">
-                                    <img className="history-chapter_h-image img-left" src="assets/images/photos/gambar11.png"
+                                <div className="history-chapter short-chap" id="chap9">
+                                    <img className="history-chapter_h-image" src="assets/images/photos/gambar11.png"
                                         style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg11")], { opacity: 0}],
-                                            [[this.getRect("historyimg11")+200], { opacity: 0.3}],
-                                            [[this.getRect("historyimg11")+400], { opacity: 1 }],
+                                            [[this.getRect("chap9")-650], { marginTop: px(0), opacity: 0}],
+                                            [[this.getRect("chap9")-400], { marginTop: px(-150), opacity: 1}],
+                                            [[this.getRect("chap9")-150], { marginTop: px(-300), opacity: 1 }],
+                                            [[this.getRect("chap9")+50], { marginTop: px(-450), opacity: 1 }],
                                         ])}
-                                        id="historyimg11"/>
+                                        id="historyimg3"/>
                                 </div>
                             </section>
                             <img className="history-content__bg"
@@ -346,8 +345,8 @@ export default class History extends Component {
                                 id="section-2"
                                 src="assets/images/bg/BGGIF2.gif"
                                 style={tween(this.state.scrollY, [
-                                    [[this.getRect("2")+300], { opacity: 0, ease: easeOutElastic }],
-                                    [[this.getRect("2")+500], { opacity: 1 }]
+                                    [[this.getRect("2")-500], { opacity: 0, ease: easeOutElastic }],
+                                    [[this.getRect("2")+200], { opacity: 1 }]
                             ])}/>
                         </div>
                     </div>

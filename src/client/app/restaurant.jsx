@@ -50,7 +50,7 @@ export default class Restaurant extends Component {
         var y = document.body.scrollTop;
         var offset = y-this.state.scrollY;
         var scroll = 0;
-        var len = this.state.navScrollPosition.length;
+        var len = 4;
         console.log(offset);
         if (offset >= 0){
             /* down */

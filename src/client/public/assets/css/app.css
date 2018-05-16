@@ -515,6 +515,7 @@ body {
     stroke-dashoffset: 200;
     stroke-dasharray: 200;
 }
+
 .history-chapter {
     position: relative;
     height: 100%;
@@ -530,6 +531,7 @@ body {
     position: absolute;
     width: 400px;
 }
+
 .history-chapter__row {
     position: relative;
 }
@@ -538,29 +540,52 @@ body {
     position: absolute;
     width: 450px!important;
 }
+
+.img-right {
+    top: 60%;
+    right: 15%;
+}
+
+.img-left {
+    left: 15%;
+}
+
 .short-chap {
     height: 400px!important;
 }
+
 .history-chapter > .history-desc {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
 }
 
-#historyimg1, #historyimg3 {
-    top: 20%;
-    left: 15%;
+.history-chapter-two {
+    overflow: hidden;
+    position: relative;
 }
-#historyimg2, #historyimg4 {
-    top: 60%;
-    right: 15%;
+
+.history-chapter-two > img {
+    width: 400px;
+}
+.history-chapter-two > .history-img-2 {
+    margin-top: 350px;
+    float: right;
+    margin-right: 15%;
+}
+.history-chapter-two > .history-img-1 {
+    margin-top: 10px;
+    position: absolute;
 }
 
 .history-chapter_one-image {
     width: 800px!important;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 10%;
+    margin: auto;
+    margin-top: 20%;
+    display: block;
+}
+#historyimg6 {
+    margin-bottom: 20%;
 }
 
 .history #opening_content > .sectionPart4__title {
@@ -583,4 +608,12 @@ body {
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
+}
+
+.history-button-scroll {
+    position:fixed;
+    top:16;
+    left:10; 
+    z-index:10;
+    opacity: 0;
 }
