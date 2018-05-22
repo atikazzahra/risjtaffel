@@ -262,7 +262,13 @@ body {
 }
 .history-container #opening_bg {
     background-image: url('../images/bg/history1.jpg')!important;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(0,0,0,1)), color-stop(0.5, rgba(0,0,0,1)), color-stop(1, rgba(0, 0, 0, 0)));
 }
+
+.history-container #opening {
+    background: rgb(84, 30, 12);
+}
+
 /* section part 4 background */
 #opening_bg {
     background-image: url('../images/bg/1.jpg');
@@ -581,7 +587,6 @@ body {
 .history-chapter_one-image {
     width: 800px!important;
     margin: auto;
-    margin-top: 20%;
     display: block;
 }
 #historyimg6 {
@@ -600,6 +605,11 @@ body {
     z-index: -10;
     -webkit-filter: brightness(55%);
 }
+#section-4 {
+    background-color: black;
+    height: 100%;
+    width: 100%;
+}
 
 /*progress line*/
 .rc-progress-line {
@@ -616,4 +626,8 @@ body {
     left:10; 
     z-index:10;
     opacity: 0;
+}
+
+.space-20 {
+    margin-top: 20%;
 }

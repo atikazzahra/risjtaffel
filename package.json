@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@researchgate/react-intersection-observer": "^0.6.1",
+    "audio": "^1.2.0",
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
@@ -22,8 +23,10 @@
     "d3-ease": "^1.0.3",
     "express": "^4.16.3",
     "functional-easing": "^1.0.10",
+    "howler": "^2.0.12",
     "in-view": "^0.6.1",
     "intersection-observer": "^0.5.0",
+    "potion-audio": "^1.1.4",
     "rc-progress": "^2.2.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

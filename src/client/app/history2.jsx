@@ -106,12 +106,8 @@ export default class History extends Component {
         }
     }
     updateBackground(e){
-        console.log("section awal:"+this.state.section);
         if (e.id != this.state.section) {
-            let bg = document.getElementById("section-"+e.id);
-            console.log(e.id);
             bg.src = bg.src;
-            console.log("masuk:"+e.id);
             this.setState({ section: e.id });
         }
     }
