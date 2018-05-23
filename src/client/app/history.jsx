@@ -305,8 +305,9 @@ export default class History extends Component {
                                 <Waypoint
                                 topOffset="100px"
                                 bottomOffset="100px"
-                                onEnter={function(){startAudio('music1');}}
-                                onLeave={function(){stopAudio('music1');}}>
+                                // onEnter={function(){startAudio('music1');}}
+                                // onLeave={function(){stopAudio('music1');}}
+                                >
                                 <div className="history-chapter" id="chap2">
                                     <div className="history-desc">
                                         <div className="history-desc__content">
@@ -374,8 +375,9 @@ export default class History extends Component {
                                 <Waypoint
                                 topOffset="100px"
                                 bottomOffset="100px"
-                                onEnter={function(){startAudio('music2');}}
-                                onLeave={function(){stopAudio('music2');}}>
+                                // onEnter={function(){startAudio('music2');}}
+                                // onLeave={function(){stopAudio('music2');}}
+                                >
                                 <div className="history-chapter" id="chap8">
                                     <img className="history-chapter_h-image img-left" src="assets/images/photos/gambar9.png"
                                         style={tween(this.state.scrollY, [
@@ -406,6 +408,14 @@ export default class History extends Component {
                             <section 
                                 className="history-section" 
                                 id="3">
+                                <div className="history-chapter" id="chap105">
+                                    <div className="history-desc">
+                                        <div className="history-desc__content">
+                                       However, because of Japan invasion in 1942, Many of the Dutch
+                                       returned back to their country, and rijsttafel culture starting to
+                                       fade away in Indonesia</div>
+                                    </div>
+                                </div>
                                 <div className="history-chapter-two" id="chap10">
                                     <img src="assets/images/photos/gambar12.png"
                                         className="history-img-1 img-left"
@@ -424,7 +434,7 @@ export default class History extends Component {
                                         ])}
                                         id="historyimg13"/>
                                 </div>
-                                <div className="history-chapter-two space-20" id="chap11">
+                                <div className="history-chapter-two" id="chap11">
                                     <img src="assets/images/photos/gambar14.png"
                                         className="history-img-1 history-chapter_h-image img-left"
                                         style={tween(this.state.scrollY, [
@@ -432,7 +442,7 @@ export default class History extends Component {
                                             [[this.getRect("historyimg13")+200], { opacity: 0.3}],
                                             [[this.getRect("historyimg13")+400], { opacity: 1 }],
                                         ])}
-                                        id="historyimg13"/>
+                                        id="historyimg14"/>
                                     <img src="assets/images/photos/gambar15.png" 
                                         className="history-img-2"
                                         style={tween(this.state.scrollY, [
@@ -440,17 +450,17 @@ export default class History extends Component {
                                             [[this.getRect("historyimg14")+200], { opacity: 0.3 }],
                                             [[this.getRect("historyimg14")+400], { opacity: 1 }]
                                         ])}
-                                        id="historyimg14"/>
+                                        id="historyimg15"/>
                                 </div>
                                 <div className="history-chapter-two space-20" id="chap12">
                                     <img src="assets/images/photos/gambar16.gif"
                                         className="history-chapter_one-image"
-                                        id="historyimg15"/>
+                                        id="historyimg16"/>
                                 </div>
                             </section>
                             <section className="history-section" 
                                 id="4">
-                                <div className="history-chapter space-20" id="chap13">
+                                <div className="history-chapter space-10" id="chap13">
                                     <div className="history-desc">
                                         <div className="history-desc__content">
                                        However, because of Japan invasion in 1942, Many of the Dutch
