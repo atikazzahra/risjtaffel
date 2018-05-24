@@ -29,6 +29,7 @@ export default class History extends Component {
             scroll: false,
             
             audios: {},
+            activeaudio: "",
             audioId: 0,
             
         };
@@ -62,7 +63,7 @@ export default class History extends Component {
     }
     loadAllAudio(){
         var self = this;
-        var audios = ['music1', 'music2'];
+        var audios = ['waves-0', '1-3', 'gamelan-5', '6-11', 'car-6', '12-15', 'end'];
         var loaded = 0;
         var sounds = [];
         for (var i=0; i<audios.length; i++) {
@@ -79,7 +80,6 @@ export default class History extends Component {
                         }, 300);
                     }
                 },
-                loop: true
             });
         }
         this.setState({audios: sounds});
@@ -166,11 +166,10 @@ export default class History extends Component {
         function startAudio(msc){
             if (Object.keys(self.state.audios).length!=0){
                 const sound = self.state.audios[msc];
-                if (self.state.audioId ==0){
-                    let id1 = sound.play();
-                    self.setState({audioId: id1});
-                    sound.fade(0, 1, 1000, id1);
-                }
+                let id1 = sound.play();
+                self.setState({audioId: id1});
+                self.setState({activeaudio: msc});
+                sound.fade(0, 1, 1000, id1);
             }
         }
         function stopAudio(msc){
@@ -180,6 +179,7 @@ export default class History extends Component {
                 setTimeout(function(){
                     sound.stop();
                     self.setState({audioId: 0});
+                    self.setState({activeaudio: ""});
                 }, 1000);
             }
         }
@@ -243,16 +243,21 @@ export default class History extends Component {
                         <div className="history-content"
                             id="history-content">
                             <img src="assets/images/title/HistoryofRijsttafel.png" id="history_title" style={{paddingTop:"600px"}}/>
-                            <svg className="history-line">
-                                <line x1="0" y1="0" x2="0" y2="100"
-                                    style={tween(this.state.scrollY, [
-                                        [[1250], { strokeDashoffset: px(200), ease: easeOutElastic}],
-                                        [[3000], { strokeDashoffset: px(0) }],
-                                    ])}/>
-                            </svg>
                             <section className="history-section" 
                                 id="1" 
                                 bg="assets/images/bg/BGGIF1.gif">
+                                    <svg className="history-line">
+                                    <line x1="0" y1="0" x2="0" y2="100"
+                                        style={tween(this.state.scrollY, [
+                                            [[1250], { strokeDashoffset: px(200), ease: easeOutElastic}],
+                                            [[3000], { strokeDashoffset: px(0) }],
+                                        ])}/>
+                                    </svg>
+                                
+                                <Waypoint
+                                    bottomOffset="250px"
+                                    onEnter={function(){startAudio('waves-0');}}
+                                    onLeave={function(){stopAudio('waves-0');}}>
                                 <div className="history-desc"
                                     style={tween(this.state.scrollY, [
                                         [[1400], { opacity: 0, ease: easeOutElastic}],
@@ -263,6 +268,7 @@ export default class History extends Component {
                                     The Dutch came to East Indies Archipelago
                                     to search spices commodities.</div>
                                 </div>
+                                </Waypoint>
                                 <svg className="history-line">
                                     <line x1="0" y1="0" x2="0" y2="100" 
                                         style={tween(this.state.scrollY, [
@@ -284,61 +290,69 @@ export default class History extends Component {
                                     which only the noblemen of the Dutch were allowed
                                     to bring thrir wife to East Indies Archipelago. </div>
                                 </div>
-                                <div className="history-chapter-two space-20" id="chap1">
-                                    <img src="assets/images/photos/gambar1.png"
-                                        className="history-img-1 img-left"
-                                        style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg1")], { opacity: 0}],
-                                            [[this.getRect("historyimg1")+200], { opacity: 0.3}],
-                                            [[this.getRect("historyimg1")+400], { opacity: 1 }],
-                                        ])}
-                                        id="historyimg1"/>
-                                    <img src="assets/images/photos/gambar2.png" 
-                                        className="history-img-2"
-                                        style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg2")], { opacity: 0}],
-                                            [[this.getRect("historyimg2")+200], { opacity: 0.3 }],
-                                            [[this.getRect("historyimg2")+400], { opacity: 1 }]
-                                        ])}
-                                        id="historyimg2"/>
-                                </div>
+
                                 <Waypoint
-                                topOffset="100px"
-                                bottomOffset="100px"
-                                // onEnter={function(){startAudio('music1');}}
-                                // onLeave={function(){stopAudio('music1');}}
-                                >
-                                <div className="history-chapter" id="chap2">
-                                    <div className="history-desc">
-                                        <div className="history-desc__content">
-                                        Differences in culture yet food ingredients, gave a big influence,
-                                        specially in the eating habits in certain families.</div>
+                                topOffset="0px"
+                                bottomOffset="200px"
+                                onEnter={function(){startAudio('1-3');}}
+                                onLeave={function(){stopAudio('1-3');}}>
+                                <div className="waypointdiv">
+                                    <div className="history-chapter-two space-20" id="chap1">
+                                        <img src="assets/images/photos/gambar1.png"
+                                            className="history-img-1 img-left"
+                                            style={tween(this.state.scrollY, [
+                                                [[this.getRect("historyimg1")], { opacity: 0}],
+                                                [[this.getRect("historyimg1")+200], { opacity: 0.3}],
+                                                [[this.getRect("historyimg1")+400], { opacity: 1 }],
+                                            ])}
+                                            id="historyimg1"/>
+                                        <img src="assets/images/photos/gambar2.png" 
+                                            className="history-img-2"
+                                            style={tween(this.state.scrollY, [
+                                                [[this.getRect("historyimg2")], { opacity: 0}],
+                                                [[this.getRect("historyimg2")+200], { opacity: 0.3 }],
+                                                [[this.getRect("historyimg2")+400], { opacity: 1 }]
+                                            ])}
+                                            id="historyimg2"/>
+                                    </div>
+                                    <div className="history-chapter" id="chap2">
+                                        <div className="history-desc">
+                                            <div className="history-desc__content">
+                                            Differences in culture yet food ingredients, gave a big influence,
+                                            specially in the eating habits in certain families.</div>
+                                        </div>
+                                    </div>
+                                    <div className="history-chapter-two" id="chap3">
+                                        <img src="assets/images/photos/gambar3.png"
+                                            className="history-img-1 img-left"
+                                            style={tween(this.state.scrollY, [
+                                                [[this.getRect("historyimg3")], { opacity: 0}],
+                                                [[this.getRect("historyimg3")+200], { opacity: 0.3}],
+                                                [[this.getRect("historyimg3")+400], { opacity: 1 }],
+                                            ])}
+                                            id="historyimg3"/>
+                                        <img src="assets/images/photos/gambar4.png"
+                                            className="history-img-2"
+                                            style={tween(this.state.scrollY, [
+                                                [[this.getRect("historyimg4")], { opacity: 0}],
+                                                [[this.getRect("historyimg4")+200], { opacity: 0.3}],
+                                                [[this.getRect("historyimg4")+400], { opacity: 1 }],
+                                            ])}
+                                            id="historyimg4"/>
                                     </div>
                                 </div>
                                 </Waypoint>
-                                <div className="history-chapter-two" id="chap3">
-                                    <img src="assets/images/photos/gambar3.png"
-                                        className="history-img-1 img-left"
-                                        style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg3")], { opacity: 0}],
-                                            [[this.getRect("historyimg3")+200], { opacity: 0.3}],
-                                            [[this.getRect("historyimg3")+400], { opacity: 1 }],
-                                        ])}
-                                        id="historyimg3"/>
-                                    <img src="assets/images/photos/gambar4.png"
-                                        className="history-img-2"
-                                        style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg4")], { opacity: 0}],
-                                            [[this.getRect("historyimg4")+200], { opacity: 0.3}],
-                                            [[this.getRect("historyimg4")+400], { opacity: 1 }],
-                                        ])}
-                                        id="historyimg4"/>
-                                </div>
+
+                                <Waypoint
+                                    bottomOffset="250px"
+                                    onEnter={function(){startAudio('gamelan-5');}}
+                                    onLeave={function(){stopAudio('gamelan-5');}}>
                                 <div className="history-chapter-two space-20" id="chap4">
                                     <img src="assets/images/photos/gambar5.gif"
                                         className="history-chapter_one-image"
                                         id="historyimg5"/>
                                 </div>
+                                </Waypoint>
                             </section>
                             <section className="history-section"
                                 id="2"
@@ -350,12 +364,23 @@ export default class History extends Component {
                                         specially in the eating habits in certain families.</div>
                                     </div>
                                 </div>
+
+                               <Waypoint
+                                    bottomOffset="250px"
+                                    onEnter={function(){startAudio('car-6');}}
+                                    onLeave={function(){stopAudio('car-6');}}>
                                 <div className="history-chapter-two" id="chap6">
                                     <img src="assets/images/photos/gambar6.gif"
                                     className="history-chapter_one-image"
                                     id="historyimg6"
                                     />
                                 </div>
+                                </Waypoint>
+                                <Waypoint
+                                    topOffset="800px"
+                                    onEnter={function(){startAudio('6-11');}}
+                                    onLeave={function(){stopAudio('6-11');}}>
+                                <div className="waypointdiv">
                                 <div className="history-chapter" id="chap7">
                                     <img className="history-chapter_h-image img-left" src="assets/images/photos/gambar7.gif"
                                         style={tween(this.state.scrollY, [
@@ -372,12 +397,6 @@ export default class History extends Component {
                                         ])}
                                         id="historyimg8"/>
                                 </div>
-                                <Waypoint
-                                topOffset="100px"
-                                bottomOffset="100px"
-                                // onEnter={function(){startAudio('music2');}}
-                                // onLeave={function(){stopAudio('music2');}}
-                                >
                                 <div className="history-chapter" id="chap8">
                                     <img className="history-chapter_h-image img-left" src="assets/images/photos/gambar9.png"
                                         style={tween(this.state.scrollY, [
@@ -394,7 +413,6 @@ export default class History extends Component {
                                         ])}
                                         id="historyimg10"/>
                                 </div>
-                                </Waypoint>
                                 <div className="history-chapter" id="chap9">
                                     <img className="history-chapter_h-image img-left" src="assets/images/photos/gambar11.png"
                                         style={tween(this.state.scrollY, [
@@ -404,6 +422,8 @@ export default class History extends Component {
                                         ])}
                                         id="historyimg11"/>
                                 </div>
+                                </div>
+                                </Waypoint>
                             </section>
                             <section 
                                 className="history-section" 
@@ -411,61 +431,73 @@ export default class History extends Component {
                                 <div className="history-chapter" id="chap105">
                                     <div className="history-desc">
                                         <div className="history-desc__content">
-                                       However, because of Japan invasion in 1942, Many of the Dutch
-                                       returned back to their country, and rijsttafel culture starting to
-                                       fade away in Indonesia</div>
+                                       Years passed, both culture combined, creating rijsttafel in the culinary
+                                       world. Rijsttafel become the icon of Indonesia Colonial culinary,
+                                       yet also part of luxurious lifestyle</div>
                                     </div>
                                 </div>
-                                <div className="history-chapter-two" id="chap10">
-                                    <img src="assets/images/photos/gambar12.png"
-                                        className="history-img-1 img-left"
-                                        style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg12")], { opacity: 0}],
-                                            [[this.getRect("historyimg12")+200], { opacity: 0.3}],
-                                            [[this.getRect("historyimg12")+400], { opacity: 1 }],
-                                        ])}
-                                        id="historyimg12"/>
-                                    <img src="assets/images/photos/gambar13.png" 
-                                        className="history-img-2"
-                                        style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg13")], { opacity: 0}],
-                                            [[this.getRect("historyimg13")+200], { opacity: 0.3 }],
-                                            [[this.getRect("historyimg13")+400], { opacity: 1 }]
-                                        ])}
-                                        id="historyimg13"/>
+                                <Waypoint
+                                    bottomOffset="250px"
+                                    onEnter={function(){startAudio('12-15');}}
+                                    onLeave={function(){stopAudio('12-15');}}>
+                                <div className="waypointdiv">
+                                    <div className="history-chapter-two" id="chap10">
+                                        <img src="assets/images/photos/gambar12.png"
+                                            className="history-img-1 img-left"
+                                            style={tween(this.state.scrollY, [
+                                                [[this.getRect("historyimg12")], { opacity: 0}],
+                                                [[this.getRect("historyimg12")+200], { opacity: 0.3}],
+                                                [[this.getRect("historyimg12")+400], { opacity: 1 }],
+                                            ])}
+                                            id="historyimg12"/>
+                                        <img src="assets/images/photos/gambar13.png" 
+                                            className="history-img-2"
+                                            style={tween(this.state.scrollY, [
+                                                [[this.getRect("historyimg13")], { opacity: 0}],
+                                                [[this.getRect("historyimg13")+200], { opacity: 0.3 }],
+                                                [[this.getRect("historyimg13")+400], { opacity: 1 }]
+                                            ])}
+                                            id="historyimg13"/>
+                                    </div>
+                                    <div className="history-chapter-two" id="chap11">
+                                        <img src="assets/images/photos/gambar14.png"
+                                            className="history-img-1 history-chapter_h-image img-left"
+                                            style={tween(this.state.scrollY, [
+                                                [[this.getRect("historyimg13")], { opacity: 0}],
+                                                [[this.getRect("historyimg13")+200], { opacity: 0.3}],
+                                                [[this.getRect("historyimg13")+400], { opacity: 1 }],
+                                            ])}
+                                            id="historyimg14"/>
+                                        <img src="assets/images/photos/gambar15.png" 
+                                            className="history-img-2"
+                                            style={tween(this.state.scrollY, [
+                                                [[this.getRect("historyimg14")], { opacity: 0}],
+                                                [[this.getRect("historyimg14")+200], { opacity: 0.3 }],
+                                                [[this.getRect("historyimg14")+400], { opacity: 1 }]
+                                            ])}
+                                            id="historyimg15"/>
+                                    </div>
+                                    <div className="history-chapter-two space-20" id="chap12">
+                                        <img src="assets/images/photos/gambar16.gif"
+                                            className="history-chapter_one-image"
+                                            id="historyimg16"/>
+                                    </div>
                                 </div>
-                                <div className="history-chapter-two" id="chap11">
-                                    <img src="assets/images/photos/gambar14.png"
-                                        className="history-img-1 history-chapter_h-image img-left"
-                                        style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg13")], { opacity: 0}],
-                                            [[this.getRect("historyimg13")+200], { opacity: 0.3}],
-                                            [[this.getRect("historyimg13")+400], { opacity: 1 }],
-                                        ])}
-                                        id="historyimg14"/>
-                                    <img src="assets/images/photos/gambar15.png" 
-                                        className="history-img-2"
-                                        style={tween(this.state.scrollY, [
-                                            [[this.getRect("historyimg14")], { opacity: 0}],
-                                            [[this.getRect("historyimg14")+200], { opacity: 0.3 }],
-                                            [[this.getRect("historyimg14")+400], { opacity: 1 }]
-                                        ])}
-                                        id="historyimg15"/>
-                                </div>
-                                <div className="history-chapter-two space-20" id="chap12">
-                                    <img src="assets/images/photos/gambar16.gif"
-                                        className="history-chapter_one-image"
-                                        id="historyimg16"/>
-                                </div>
+                                </Waypoint>
                             </section>
                             <section className="history-section" 
                                 id="4">
                                 <div className="history-chapter space-10" id="chap13">
                                     <div className="history-desc">
+                                    <Waypoint
+                                    bottomOffset="100px"
+                                    onEnter={function(){startAudio('end');}}
+                                    onLeave={function(){stopAudio('end');}}>
                                         <div className="history-desc__content">
                                        However, because of Japan invasion in 1942, Many of the Dutch
                                        returned back to their country, and rijsttafel culture starting to
                                        fade away in Indonesia</div>
+                                    </Waypoint>
                                     </div>
                                 </div>
                             </section>
