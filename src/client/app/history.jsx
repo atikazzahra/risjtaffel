@@ -169,13 +169,13 @@ export default class History extends Component {
                 let id1 = sound.play();
                 self.setState({audioId: id1});
                 self.setState({activeaudio: msc});
-                sound.fade(0, 1, 1000, id1);
+                sound.fade(0, 0.5, 1000, id1);
             }
         }
         function stopAudio(msc){
             if (Object.keys(self.state.audios).length!=0){
                 const sound = self.state.audios[msc];
-                sound.fade(1, 0, 1000, self.state.audioId);
+                sound.fade(0.5, 0, 1000, self.state.audioId);
                 setTimeout(function(){
                     sound.stop();
                     self.setState({audioId: 0});
@@ -437,6 +437,7 @@ export default class History extends Component {
                                     </div>
                                 </div>
                                 <Waypoint
+                                    topOffset="200px"
                                     bottomOffset="250px"
                                     onEnter={function(){startAudio('12-15');}}
                                     onLeave={function(){stopAudio('12-15');}}>
@@ -477,7 +478,7 @@ export default class History extends Component {
                                             ])}
                                             id="historyimg15"/>
                                     </div>
-                                    <div className="history-chapter-two space-20" id="chap12">
+                                    <div className="history-chapter-two space-10" id="chap12">
                                         <img src="assets/images/photos/gambar16.gif"
                                             className="history-chapter_one-image"
                                             id="historyimg16"/>
@@ -487,7 +488,7 @@ export default class History extends Component {
                             </section>
                             <section className="history-section" 
                                 id="4">
-                                <div className="history-chapter space-10" id="chap13">
+                                <div className="history-chapter space-20" id="chap13">
                                     <div className="history-desc">
                                     <Waypoint
                                     bottomOffset="100px"

@@ -48,7 +48,6 @@ export default class Restaurant extends Component {
         this.loadAllImage();
         this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions);
-        // window.addEventListener('mousewheel', this.updateScrollPosition);
         let self = this;
         let sound = new Howl({
             src: ['assets/music/restaurant.mp3'],
@@ -75,7 +74,6 @@ export default class Restaurant extends Component {
                 idx++;
             }
         } else {
-            /* up */
             var found = false;
             var idx = len;
             while (!found && idx+1 > 0) {
@@ -142,17 +140,22 @@ export default class Restaurant extends Component {
             sectionHeight: this.getSectionRect().height,
             navScrollPosition: this.updateNavData()});
     }
-    componentWillUpdate() {
-        if (this.state.loading == true && this.state.audio!=null) {
+    componentDidUpdate() {
+        if (this.state.loading == false && this.state.audio!= null) {
             if (this.state.played == false){
                 this.setState({played: true});
                 const sound = this.state.audio;
                 let id1 = sound.play();
-                console.log("played!");
                 sound.fade(0, 1, 4000, id1);
             }
         }
       }
+    componentWillUnmount() {
+        if (this.state.played == true){
+            const sound = this.state.audio;
+            let id1 = sound.stop();
+        }
+    }
     render() {
         const navTweenPostion = [0, 359, 390, 846, 847, 1327, 1346, 1844, 1860];
         const easeOutElastic = new Easer().using('out-elastic').withParameters(0.7, 2);
