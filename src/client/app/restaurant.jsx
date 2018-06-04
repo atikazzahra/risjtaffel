@@ -20,6 +20,7 @@ import {SectionPart4, NavPart4, FoodDescPart4, LoadingPage} from './components/i
 import Scroll from 'react-scroll';
 import {Howl, Howler} from 'howler';
 import Waypoint from 'react-waypoint';
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 
 export default class Restaurant extends Component {
     constructor(props){
@@ -146,7 +147,7 @@ export default class Restaurant extends Component {
                 this.setState({played: true});
                 const sound = this.state.audio;
                 let id1 = sound.play();
-                sound.fade(0, 1, 4000, id1);
+                sound.fade(0, 0.3, 4000, id1);
             }
         }
       }
@@ -163,6 +164,11 @@ export default class Restaurant extends Component {
         let self = this;
         return (
             <div className="main">
+                <ul className="Navbar">
+                    <li>
+                    <Link to="/">History</Link>
+                    </li>
+                </ul>
                 <LoadingPage
                     active={this.state.loading}
                     progress={this.state.percent}></LoadingPage>
@@ -182,9 +188,9 @@ export default class Restaurant extends Component {
                                 </div>
                                 <img src="assets/images/title/1.png" id="opening_title"/>
                                 <div id="opening_desc">
-                                Some rijsttafel’s menu which still available in the present day, chosen from
+                                Some <span className="italic">rijsttafel’s</span> menu which still available in the present day, chosen from
                                 the menu of Tugu Kunstkring Paleis, one of the restaurants in Indonesia
-                                that still have rijsttafel’s dishes and servings.
+                                that still have <span className="italic">rijsttafel’s</span> dishes and servings.
                                 </div>
                             </div>
                             <img src="assets/images/food/Kunstkring_Tea.png" className="sectionPart4__content-img" id="tea"/>

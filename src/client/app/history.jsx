@@ -11,6 +11,8 @@ import Animate from 'react-move/Animate';
 import Scroll from 'react-scroll';
 import {Howl, Howler} from 'howler';
 import Waypoint from 'react-waypoint';
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import {YouTubeIframeLoader} from 'youtube-iframe';
 
 export default class History extends Component {
     constructor(props){
@@ -42,6 +44,7 @@ export default class History extends Component {
         this.loadAllImage = this.loadAllImage.bind(this);
         this.loadAllAudio = this.loadAllAudio.bind(this);
         this.getRect = this.getRect.bind(this);
+        this.playVideo = this.playVideo.bind(this);
     }
     componentDidMount() {
         this.loadAllAudio();
@@ -158,6 +161,21 @@ export default class History extends Component {
             smooth: "linear",
         })
     }
+
+    playVideo(){
+        var element = document.getElementById("video-cover");
+        element.parentNode.removeChild(element);
+        var YouTubeIframeLoader = require('youtube-iframe');
+        YouTubeIframeLoader.load(function(YT) {
+            new YT.Player('video', {
+                height: '390',
+                width: '640',
+                playerVars: { 'autoplay': 1, 'controls': 0 },
+                videoId: '5kXZf6bDAAE'
+            });
+        });
+    }
+    
     render() {
         const easeOutElastic = new Easer().using('out-elastic').withParameters(0.7, 2);
         const easeInElastic = new Easer().using('in-elastic').withParameters(2, 0.7);
@@ -165,26 +183,48 @@ export default class History extends Component {
         let self = this;
         function startAudio(msc){
             if (Object.keys(self.state.audios).length!=0){
+                if (msc=="6-11"){
+                    const car = self.state.audios["car-6"];
+                    let idcar = car.play();
+                    car.fade(0, 0.5, 2000, idcar);
+                }
                 const sound = self.state.audios[msc];
                 let id1 = sound.play();
                 self.setState({audioId: id1});
                 self.setState({activeaudio: msc});
-                sound.fade(0, 0.5, 1000, id1);
+                sound.fade(0, 0.5, 2000, id1);
             }
         }
         function stopAudio(msc){
             if (Object.keys(self.state.audios).length!=0){
+                if (msc=="6-11"){
+                    const car = self.state.audios["car-6"];
+                    car.stop();
+                }
                 const sound = self.state.audios[msc];
-                sound.fade(0.5, 0, 1000, self.state.audioId);
-                setTimeout(function(){
+                if (self.state.scroll==true){
+                    sound.fade(0.5, 0, 2000, self.state.audioId);
+                    setTimeout(function(){
+                        sound.stop();
+                        self.setState({audioId: 0});
+                        self.setState({activeaudio: ""});
+                    }, 2000);
+                } else {
                     sound.stop();
-                    self.setState({audioId: 0});
-                    self.setState({activeaudio: ""});
-                }, 1000);
+                }
+                
             }
         }
         return (
             <div className="main" id="main">
+                <ul className="Navbar">
+                    <li>
+                    <a href="#chap14">Video</a>
+                    </li>
+                    <li>
+                    <Link to="/restaurant">Restaurant</Link>
+                    </li>
+                </ul>
                 {/* <div style={{'position':'fixed', 'zIndex': '999', 'color': 'white'}}> {this.state.scrollY} </div> */}
                 <LoadingPage
                     active={this.state.loading}
@@ -212,9 +252,9 @@ export default class History extends Component {
                             <div className="sectionPart4__title">
                                 <img src="assets/images/title/TheRijsttafelCulture.png" id="opening_title"/>
                                 <div id="opening_desc">
-                                Rijsttafel come from the word ‘rijst’ which means rice, and ‘tafel’
+                                <span className="italic">Rijsttafel</span> come from the word <span className="italic">‘rijst’</span> which means rice, and ‘tafel’
                                 which means table, which when unified have meanings: rice dishes.
-                                The Dutch use the word ‘rijsttafel’ for Indonesian cuisines,
+                                The Dutch use the word <span className="italic">‘rijsttafel’</span> for Indonesian cuisines,
                                 which served completely on the dine table, like the Western’s style.
                                 </div>
                                 <Scroll.Link activeClass="active"
@@ -284,16 +324,16 @@ export default class History extends Component {
                                     ])}>
                                     <div className="history-desc__title">1602</div>
                                     <div className="history-desc__content">
-                                    Vereenigde Oostindische Compagnie (VOC),
+                                    <span className="italic">Vereenigde Oostindische Compagnie</span> (VOC),
                                     a Dutch trading company was founded.
-                                    They made a rule called, vrijgezel cultuur,
+                                    They made a rule called, <span className="italic">vrijgezel cultuur</span>,
                                     which only the noblemen of the Dutch were allowed
-                                    to bring thrir wife to East Indies Archipelago. </div>
+                                    to bring their wife to East Indies Archipelago.</div>
                                 </div>
 
                                 <Waypoint
-                                topOffset="0px"
-                                bottomOffset="200px"
+                                topOffset="200px"
+                                bottomOffset="0px"
                                 onEnter={function(){startAudio('1-3');}}
                                 onLeave={function(){stopAudio('1-3');}}>
                                 <div className="waypointdiv">
@@ -318,8 +358,8 @@ export default class History extends Component {
                                     <div className="history-chapter" id="chap2">
                                         <div className="history-desc">
                                             <div className="history-desc__content">
-                                            Differences in culture yet food ingredients, gave a big influence,
-                                            specially in the eating habits in certain families.</div>
+                                            Differences in culture, gave a big influence,
+                                            especially in the eating habits in certain families.</div>
                                         </div>
                                     </div>
                                     <div className="history-chapter-two" id="chap3">
@@ -344,7 +384,8 @@ export default class History extends Component {
                                 </Waypoint>
 
                                 <Waypoint
-                                    bottomOffset="250px"
+                                    topOffset="200px"
+                                    bottomOffset="0px"
                                     onEnter={function(){startAudio('gamelan-5');}}
                                     onLeave={function(){stopAudio('gamelan-5');}}>
                                 <div className="history-chapter-two space-20" id="chap4">
@@ -359,28 +400,27 @@ export default class History extends Component {
                                 bg="assets/images/bg/BGGIF2.gif">
                                 <div className="history-chapter" id="chap5">
                                     <div className="history-desc">
+                                        <div className="history-desc__title">1870</div>
                                         <div className="history-desc__content">
-                                        Differences in culture yet food ingredients, gave a big influence,
-                                        specially in the eating habits in certain families.</div>
+                                        Acculturation of Dutch culture with Natives culture 
+                                        growing rapidly in various aspects, including culinary.</div>
                                     </div>
                                 </div>
 
                                <Waypoint
-                                    bottomOffset="250px"
-                                    onEnter={function(){startAudio('car-6');}}
-                                    onLeave={function(){stopAudio('car-6');}}>
+                                    topOffset="250px"
+                                    bottomOffset="200px"
+                                    onEnter={function(){startAudio('6-11');}}
+                                    onLeave={function(){stopAudio('6-11');}}>
+                                <div className="waypointdiv">
+
                                 <div className="history-chapter-two" id="chap6">
                                     <img src="assets/images/photos/gambar6.gif"
                                     className="history-chapter_one-image"
                                     id="historyimg6"
                                     />
                                 </div>
-                                </Waypoint>
-                                <Waypoint
-                                    topOffset="800px"
-                                    onEnter={function(){startAudio('6-11');}}
-                                    onLeave={function(){stopAudio('6-11');}}>
-                                <div className="waypointdiv">
+                                
                                 <div className="history-chapter" id="chap7">
                                     <img className="history-chapter_h-image img-left" src="assets/images/photos/gambar7.gif"
                                         style={tween(this.state.scrollY, [
@@ -432,13 +472,13 @@ export default class History extends Component {
                                     <div className="history-desc">
                                         <div className="history-desc__content">
                                        Years passed, both culture combined, creating rijsttafel in the culinary
-                                       world. Rijsttafel become the icon of Indonesia Colonial culinary,
-                                       yet also part of luxurious lifestyle</div>
+                                       world. <span className="italic">Rijsttafel</span> became the icon of Indonesian Colonial culinary,
+                                       yet also part of luxurious lifestyle.</div>
                                     </div>
                                 </div>
                                 <Waypoint
                                     topOffset="200px"
-                                    bottomOffset="250px"
+                                    bottomOffset="100px"
                                     onEnter={function(){startAudio('12-15');}}
                                     onLeave={function(){stopAudio('12-15');}}>
                                 <div className="waypointdiv">
@@ -488,17 +528,39 @@ export default class History extends Component {
                             </section>
                             <section className="history-section" 
                                 id="4">
-                                <div className="history-chapter space-20" id="chap13">
+                                <div className="history-chapter space-20" id="chap13"> 
+                                <Waypoint
+                                bottomOffset="100px"
+                                onEnter={function(){startAudio('end');}}
+                                onLeave={function(){stopAudio('end');}}>
                                     <div className="history-desc">
-                                    <Waypoint
-                                    bottomOffset="100px"
-                                    onEnter={function(){startAudio('end');}}
-                                    onLeave={function(){stopAudio('end');}}>
-                                        <div className="history-desc__content">
-                                       However, because of Japan invasion in 1942, Many of the Dutch
-                                       returned back to their country, and rijsttafel culture starting to
-                                       fade away in Indonesia</div>
-                                    </Waypoint>
+                                    <div className="history-desc__content">
+                                    However, because of Japan invansion in 1942, 
+                                    many of the Dutch returned back to their country and <span className="italic">rijsttafel</span> culture started to
+                                    fade away in Indonesia.</div>
+                                    </div>
+                                </Waypoint>
+                                </div>
+                                <div className="history-chapter" id="chap14">
+                                    <div className="video-content">
+                                        <div className="content">
+                                            <img className="video-title" src="assets/images/title/SpiritofRijsttafel.png"/>
+                                            <div className="video">
+                                                <div id="video-cover">
+                                                <span onClick={this.playVideo}><i className="fas fa-play video-icon"></i></span>
+                                                <img className="video-cover" src="assets/images/bg/videocover.gif"
+                                                style={tween(this.state.scrollY, [
+                                                    [[this.getRect("chap14")+300], { opacity: 0, ease: easeOutElastic }],
+                                                    [[this.getRect("chap14")+500], { opacity: 1 }]])}/>
+                                                </div>
+                                                <div id="video"></div>
+                                            </div>
+                                            <a href="/restaurant"
+                                            id="video-next"
+                                            style={tween(this.state.scrollY, [
+                                                [[this.getRect("video-next")+100], { opacity: 0, ease: easeOutElastic }],
+                                                [[this.getRect("video-next")+200], { opacity: 1 }]])}>Next</a>
+                                        </div>
                                     </div>
                                 </div>
                             </section>

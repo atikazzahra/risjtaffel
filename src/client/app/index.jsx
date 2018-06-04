@@ -9,14 +9,6 @@ class App extends Component {
         return (
             <Router>
                 <div>
-                    <ul className="Navbar">
-                        <li>
-                        <Link to="/">History</Link>
-                        </li>
-                        <li>
-                        <Link to="/restaurant">Restaurant</Link>
-                        </li>
-                    </ul>
                     <Route exact path="/" component={History}/>
                     <Route path="/restaurant" component={Restaurant}/>
                 </div>
