@@ -457,7 +457,7 @@ body {
 /* RESTAURANT */
 .Navbar {
     font-family: Alice;
-    position: absolute;
+    position: fixed;
     right: 30;
     z-index: 10;
     display: inline;
@@ -658,7 +658,7 @@ iframe {
 #video {
     width: 600px;
     height: 350px;  
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .video-title {
     width: 600px;
@@ -692,6 +692,11 @@ iframe {
     transform: translate(-50%, -50%);
     top: 43%;
     left: 50%;
+}
+.video-source {
+    color: #a0a0a0;
+    font-size: 12px;
+    margin-bottom: 20px;
 }
 .video-icon {
     font-size: 50;

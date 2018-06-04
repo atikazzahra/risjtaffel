@@ -554,6 +554,7 @@ export default class History extends Component {
                                                     [[this.getRect("chap14")+500], { opacity: 1 }]])}/>
                                                 </div>
                                                 <div id="video"></div>
+                                                <div className="video-source">Sumber: Food Story Kompas TV - 31 Maret 2016</div>
                                             </div>
                                             <a href="/restaurant"
                                             id="video-next"
