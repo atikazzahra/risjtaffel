@@ -13,6 +13,7 @@ import {Howl, Howler} from 'howler';
 import Waypoint from 'react-waypoint';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import {YouTubeIframeLoader} from 'youtube-iframe';
+import {easeExpInOut} from 'd3-ease';
 
 export default class History extends Component {
     constructor(props){
@@ -218,14 +219,17 @@ export default class History extends Component {
         return (
             <div className="main" id="main">
                 <ul className="Navbar">
-                    <li>
+                    <li
+                    style={tween(this.state.scrollY, [
+                        [[this.getRect("chap14")+100], { opacity:1 }],
+                        [[this.getRect("chap14")+300], { opacity:0 }],
+                    ])}>
                     <a href="#chap14">Video</a>
                     </li>
                     <li>
                     <Link to="/restaurant">Restaurant</Link>
                     </li>
                 </ul>
-                {/* <div style={{'position':'fixed', 'zIndex': '999', 'color': 'white'}}> {this.state.scrollY} </div> */}
                 <LoadingPage
                     active={this.state.loading}
                     progress={this.state.percent+this.state.percentaudio}></LoadingPage>
@@ -234,6 +238,8 @@ export default class History extends Component {
                         style={tween(this.state.scrollY, [
                             [[1100], { opacity:0, ease: easeOutElastic}],
                             [[1300], { opacity:1 }],
+                            [[this.getRect("chap14")+100], { opacity:1 }],
+                            [[this.getRect("chap14")+300], { opacity:0 }],
                         ])} 
                         className="history-button-scroll"
                         onClick={this.scrollAction}>
@@ -471,7 +477,7 @@ export default class History extends Component {
                                 <div className="history-chapter" id="chap105">
                                     <div className="history-desc">
                                         <div className="history-desc__content">
-                                       Years passed, both culture combined, creating rijsttafel in the culinary
+                                       Years passed, both culture combined, creating <span className="italic">rijsttafel</span> in the culinary
                                        world. <span className="italic">Rijsttafel</span> became the icon of Indonesian Colonial culinary,
                                        yet also part of luxurious lifestyle.</div>
                                     </div>
@@ -556,11 +562,26 @@ export default class History extends Component {
                                                 <div id="video"></div>
                                                 <div className="video-source">Sumber: Food Story Kompas TV - 31 Maret 2016</div>
                                             </div>
-                                            <a href="/restaurant"
-                                            id="video-next"
-                                            style={tween(this.state.scrollY, [
-                                                [[this.getRect("video-next")+100], { opacity: 0, ease: easeOutElastic }],
-                                                [[this.getRect("video-next")+200], { opacity: 1 }]])}>Next</a>
+                                            <div id="video-link">
+                                            <Animate
+                                                show={this.state.scrollY>=this.getRect("chap14")+640}
+                                                start={{
+                                                    opacity: 0,
+                                                }}
+                                                enter={{
+                                                    opacity: [1],
+                                                    timing: { duration: 2000, ease: easeExpInOut },
+                                                }}>
+                                                {(state) => {
+                                                    const { opacity } = state;
+                                                    return (
+                                                        <div style={{opacity: `${opacity}`}}>
+                                                            <a href="/restaurant" id="video-next">Next</a>
+                                                        </div>
+                                                    );
+                                                }}
+                                            </Animate>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

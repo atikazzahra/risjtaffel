@@ -667,16 +667,19 @@ iframe {
 .video-content {
     position: absolute;
     transform: translate(-50%, -50%);
-    top: 48%;
+    top: 50%;
     left: 50%;
 }
 .content {
     text-align: center;
 }
-.video-next {
+#video-next {
     color: #eaa30d;
     text-decoration: none;
-    font-size: 20;
+    font-size: 30;
+    border: 2px solid white;
+    padding: 1px 12px;
+    border-radius: 9px;
 }
 .video {
     position: relative;
@@ -708,7 +711,7 @@ iframe {
     left: 50%;
     cursor: pointer;
 }
-.video-icon:hover {
+.video-icon:hover, #video-next:hover {
     color: #ffca5b;
 }
 .content > a {
@@ -716,3 +719,4 @@ iframe {
     text-decoration: none;
     font-size: 30px;
 }
+#video-link { height: 42px; }
